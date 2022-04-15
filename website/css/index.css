@@ -1,5 +1,23 @@
+@font-face { font-family: "Roboto"; src: url("/website/misc/fonts/Roboto/Roboto-Light.ttf"); }
+
+body
+{
+    margin: 0;
+    padding: 0;
+    color: white;
+    background-color: rgb(54, 54, 54);
+    font-family: 'Roboto', sans-serif;
+}
+
 .placeholderText
 {
-    color: grey;
     font-style: italic;
+}
+
+#content
+{
+    position: absolute;
+    top: 160px;
+    width: 100%;
+    z-index: 1;
 }

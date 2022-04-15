@@ -2,13 +2,34 @@
 
 <head>
     <title>Project Title Placeholder</title>
-    <link href="css/index.css" rel="stylesheet">
+    <!-- CSS Files -->
+        <link href="css/index.css" rel="stylesheet">
+        <link href="css/section.css" rel="stylesheet">
+        <link href="css/navbar.css" rel="stylesheet">
+    <!-- JQUERY Files -->
+        <script type="text/javascript" src="js/jquery(dev).js"></script>
+        <script type="text/javascript" src="js/jqueryMigrate(dev).js"></script>
+    <!-- JS Files -->
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="js/menu.js"></script>      
+
 </head>
 <body>
-    <h1 class="placeholderText">Website Title</h1>
-    <div id="mainMenu">
-        <span class="placeholderText">Game name</span>
-        <span>Technical Overview</span>
-        <span>Documentation</span>
+    <div id="navbar">
+        <img id="projectLogo" src="misc/projectLogoPlaceholder.svg" class="chev" viewbox="0 0 100 100">
+        <div id="mainMenu">
+            <span onclick = "displayG()" class="placeholderText">Game name</span>
+            <span onclick = "displayTO()">Technical Overview</span>
+            <span onclick = "displayD()">Documentation</span>
+            <span onclick = "displayT()">Our Team</span>
+        </div>
     </div>
+    <div id="content">
+        <div class="section" id="gameSection"></div>
+        <div class="section" id="technicalOverviewSection"></div>
+        <div class="section" id="documentationSection"></div>
+        <div class="section" id="teamSection"></div>
+    </div>
+
+
 </body>
