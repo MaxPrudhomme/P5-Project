@@ -15,3 +15,15 @@ function scrollFunction()
         document.getElementById("mainMenu").style.marginTop = "80px";
     }
 }
+
+function displaySection(ele)
+{
+    var buttons = ['projectSectionButton','technicalOverviewSectionButton','documentationSectionButton','teamSectionButton']
+    var sections = ['projectSection','technicalOverviewSection','documentationSection','teamSection']
+    var cIndex = buttons.indexOf(ele)
+    var caller = document.getElementById(sections[cIndex])
+    sections.splice(cIndex,1);
+    for(i in sections) { document.getElementById(sections[i]).style.opacity = 0; document.getElementById(sections[i]).style.display = 'none'; }
+    caller.style.display = 'block';
+    setTimeout(function(){ caller.style.opacity = 1; }, 0.5)
+}

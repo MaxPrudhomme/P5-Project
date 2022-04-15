@@ -18,14 +18,14 @@
     <div id="navbar">
         <img id="projectLogo" src="misc/projectLogoPlaceholder.svg" class="chev" viewbox="0 0 100 100">
         <div id="mainMenu">
-            <span onclick = "displayG()" class="placeholderText">Game name</span>
-            <span onclick = "displayTO()">Technical Overview</span>
-            <span onclick = "displayD()">Documentation</span>
-            <span onclick = "displayT()">Our Team</span>
+            <span id="projectSectionButton" onclick = "displaySection(this.id)">Project</span>
+            <span id="technicalOverviewSectionButton" onclick = "displaySection(this.id)">Technical Overview</span>
+            <span id="documentationSectionButton" onclick = "displaySection(this.id)">Documentation</span>
+            <span id="teamSectionButton" onclick = "displaySection(this.id)">Our Team</span>
         </div>
     </div>
     <div id="content">
-        <div class="section" id="gameSection"></div>
+        <div class="section" id="projectSection"></div>
         <div class="section" id="technicalOverviewSection"></div>
         <div class="section" id="documentationSection"></div>
         <div class="section" id="teamSection"></div>

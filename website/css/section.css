@@ -1,26 +1,29 @@
-#gameSection
+#projectSection
 {
-    border: 1px solid green;
+    border: 3px solid green;
     opacity: 1;
+    display: block
 }
 
 #technicalOverviewSection
 {
-    border: 1px solid red;
+    border: 3px solid red;
 }
 
 #documentationSection
 {
-    border: 1px solid blue;
+    border: 3px solid blue;
 }
 
 #teamSection
 {
-    border: 1px solid yellow;
+    border: 3px solid yellow;
 }
 
 .section
 {
     transition: all 0.5s ease;
     height: 500px;
+    opacity: 0;
+    display: none;
 }
