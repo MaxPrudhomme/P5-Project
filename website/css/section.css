@@ -1,29 +1,17 @@
 #projectSection
 {
-    border: 3px solid green;
     opacity: 1;
     display: block
-}
-
-#technicalOverviewSection
-{
-    border: 3px solid red;
-}
-
-#documentationSection
-{
-    border: 3px solid blue;
-}
-
-#teamSection
-{
-    border: 3px solid yellow;
 }
 
 .section
 {
     transition: all 0.5s ease;
-    height: 500px;
     opacity: 0;
     display: none;
+}
+
+.sectionTitle
+{
+    text-align: center;
 }

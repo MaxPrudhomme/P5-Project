@@ -1,0 +1,45 @@
+#teamSection
+{
+    width: 95%;
+    margin: auto;
+    background-color: rgb(41, 37, 43);
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.team
+{
+    display: flex;
+    justify-content: center;
+}
+
+.person
+{
+    border: 2px solid grey;
+    border-radius: 25px;
+    width: 300px;
+    height: 450px;
+    margin: 30px;
+    transition: all 0.5s ease;
+    display: flex;
+    overflow: hidden;
+}
+
+.person:hover
+{
+    width: 800px;
+}
+
+.personInfos
+{
+    padding: 30px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+
+.skill
+{
+    border-radius: 5px;
+    margin-right: 10px;
+}

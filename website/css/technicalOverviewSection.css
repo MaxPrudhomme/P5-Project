@@ -1,0 +1,17 @@
+#technicalOverviewSection
+{
+    width: 95%;
+    margin: auto;
+    background-color: rgb(41, 37, 43);
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.component
+{
+    width: 95%;
+    margin: auto;
+    margin-top: 50px;
+    padding: 10px;
+    background-color: rgb(27, 27, 27);
+}
