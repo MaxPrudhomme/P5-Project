@@ -1,4 +1,5 @@
-body
+.placeholderText
 {
-    color: blue;
+    color: grey;
+    font-style: italic;
 }
