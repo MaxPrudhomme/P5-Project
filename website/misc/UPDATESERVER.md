@@ -1,0 +1,1 @@
+To update server content, go to 'P5-Project' and run 'git pull origin main'
