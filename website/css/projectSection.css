@@ -1,8 +1,16 @@
+:root
+{
+    --section-bg-color: rgb(41, 37, 43);
+    --feature-bg-color: rgb(27, 27, 27);
+    --dl-bg-color: rgb(51, 51, 51);
+    --dl-hover-bg-color: rgb(77, 77, 77);
+}
+
 #projectSection
 {
     width: 95%;
     margin: auto;
-    background-color: rgb(41, 37, 43);
+    background-color: var(--section-bg-color);
     padding-top: 30px;
     padding-bottom: 30px;
 }
@@ -20,7 +28,7 @@
     margin-top: 50px;
     padding: 10px;
     display: flex;
-    background-color: rgb(27, 27, 27);
+    background-color: var(--feature-bg-color);
 }
 
 .fRight > img
@@ -45,7 +53,7 @@
     margin: auto;
     margin-top: 50px;
     padding: 10px;
-    background-color: rgb(27, 27, 27);
+    background-color: var(--feature-bg-color);
     text-align: center;
 }
 
@@ -54,7 +62,7 @@
 {
     border-radius: 10px;
     font-size: 40px;
-    background-color: rgb(51, 51, 51);
+    background-color: var(--dl-bg-color);
     width: 50px;
     height: 50px;
     transition: all 0.5s ease;
@@ -66,7 +74,7 @@
 {
     width: 75px;
     height: 75px;
-    background-color: rgb(77, 77, 77);
+    background-color: var(--dl-hover-bg-color);
     cursor: pointer;
 }
 

@@ -1,8 +1,14 @@
+:root
+{
+    --section-bg-color: rgb(41, 37, 43);
+    --component-bg-color: rgb(27, 27, 27);
+}
+
 #technicalOverviewSection
 {
     width: 95%;
     margin: auto;
-    background-color: rgb(41, 37, 43);
+    background-color: var(--section-bg-color);
     padding-top: 30px;
     padding-bottom: 30px;
 }
@@ -13,5 +19,5 @@
     margin: auto;
     margin-top: 50px;
     padding: 10px;
-    background-color: rgb(27, 27, 27);
+    background-color: var(--component-bg-color);
 }

@@ -1,8 +1,13 @@
+:root
+{
+    --section-bg-color: rgb(41, 37, 43);
+}
+
 #teamSection
 {
     width: 95%;
     margin: auto;
-    background-color: rgb(41, 37, 43);
+    background-color: var(--section-bg-color);
     padding-top: 30px;
     padding-bottom: 30px;
 }
