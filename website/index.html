@@ -6,7 +6,7 @@
         <link href="css/index.css" rel="stylesheet">
         <link href="css/section.css" rel="stylesheet">
         <link href="css/navbar.css" rel="stylesheet">
-        
+        <link href="css/footer.css" rel="stylesheet">
         <!-- Section Files -->
         <link href="css/projectSection.css" rel="stylesheet">
         <link href="css/technicalOverviewSection.css" rel="stylesheet">
@@ -20,6 +20,7 @@
         <script type="text/javascript" src="js/menu.js"></script>          
 </head>
 <body>
+    <!-- Navbar -->
     <div id="navbar">
         <img id="projectLogo" src="misc/projectLogoPlaceholder.svg" viewbox="0 0 100 100">
         <div id="mainMenu">
@@ -29,6 +30,7 @@
             <div class="sectionMenu" id="teamSectionButton" onclick = "displaySection(this.id)">Our Team</div>
         </div>
     </div>
+    <!-- Content -->
     <div id="content">
         <!-- Project Section -->
         <div class="section" id="projectSection">
@@ -229,4 +231,47 @@
             </div>
         </div>
     </div>
+    <!-- Footer -->
+    <div id="footer">
+        <!-- Media Section -->
+        <div id="media">
+            <!-- Newsletter Section -->
+            <div id="newsletterContainer">
+            <span class="footerText">Sign up for the project Newsletter</span>
+            <form action="" method="GET">
+                <div id="newsletterInputContainer">
+                    <input type="email" placeholder="   name@email.com" name="email" id="emailField">
+                    <button type="submit" id="submitButton">
+                        <img src="misc/arrow-right.svg" viewbow="0 0 100 100" id="submitArrow">
+                    </button>
+                </div>
+            </form>
+            </div>
+            <!-- Social Media Section -->
+            <div id="socialMediaContainer">
+                <span class="footerText">Join our social media to follow the project developpment !</span>
+                <div id="projectMediaContainer">
+                    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+                        <img src="misc/instagram.svg" class="mediaIcon" viewbox="0 0 100 100">
+                    </a>
+                    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+                        <img src="misc/twitter.svg" class="mediaIcon" viewbox="0 0 100 100">
+                    </a>
+                    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+                        <img src="misc/youtube.svg" class="mediaIcon" viewbox="0 0 100 100">
+                    </a>
+                    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+                        <img src="misc/discord.svg" class="mediaIcon" viewbox="0 0 100 100">
+                    </a>
+
+                </div>
+            </div>
+        </div>
+        <!-- Copyright Section -->
+        <div id="copyright">
+            <p>Copyright &copy 2022 Jacky Industry, Inc All rights reserved. <span>Terms of Use</span> | <span>Privacy Policy</span></p>
+            <p>1 420 Jacky Industry (1 420 666 6942) | TTY (1 421 667 6943)</p>
+        </div>
+    </div>
+
 </body>
