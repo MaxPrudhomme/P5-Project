@@ -45,10 +45,22 @@
     line-height: 300%;
     background-color: var(--button-bg-color);
     transition: all 0.5s ease;
+    cursor: pointer;
 }
 
 #mainMenu > div:hover
 {
     background-color: var(--button-hover-bg-color);
     border-radius: 10px;
+}
+
+
+#touLink
+{
+    color: grey;
+}
+
+#ppLink
+{
+    color: grey;
 }

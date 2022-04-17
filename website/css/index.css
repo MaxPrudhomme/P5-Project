@@ -21,8 +21,6 @@ body
 
 #content
 {
-    position: absolute;
-    top: 160px;
+    margin-top: 160px;
     width: 100%;
-    z-index: 1;
 }
