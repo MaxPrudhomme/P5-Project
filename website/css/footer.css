@@ -58,6 +58,12 @@ input:focus
 {
     filter: invert(100%) sepia(2%) saturate(7%) hue-rotate(348deg) brightness(101%) contrast(103%);
     height: 28px;
+    transition: all 0.5s ease;
+}
+
+#submitArrow:hover
+{
+    filter: invert(69%) sepia(50%) saturate(184%) hue-rotate(240deg) brightness(105%) contrast(89%);
 }
 
 .footerText

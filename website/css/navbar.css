@@ -19,19 +19,29 @@
 
 #projectLogo
 {
-    margin: 5px;
     transition: all 0.5s ease;
+}
+
+#indexLink
+{
+    margin-left: 5px;
+    margin-top: 5px;
+    margin-bottom: 2px;
+    margin-right: 5px;
+    padding-bottom: none;
 }
 
 #mainMenu
 {
-    width: 100%;
+    width: 60%;
     height: 50px;
-    position: fixed; 
-    margin-top: 60px;      
+    position: fixed;      
     display: flex;
     justify-content: center;
     transition: all 0.5s ease;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 60px;
 }
 
 #mainMenu > div

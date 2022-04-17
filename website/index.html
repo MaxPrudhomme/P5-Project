@@ -22,7 +22,8 @@
 <body>
     <!-- Navbar -->
     <div id="navbar">
-        <img id="projectLogo" src="misc/projectLogoPlaceholder.svg" viewbox="0 0 100 100">
+        <a href="index.html" id="indexLink"><img id="projectLogo" src="misc/projectLogoPlaceholder.svg" viewbox="0 0 100 100"></a>
+
         <div id="mainMenu">
             <div class="sectionMenu" id="projectSectionButton" onclick = "displaySection(this.id)"><span>Project</span></div>
             <div class="sectionMenu" id="technicalOverviewSectionButton" onclick = "displaySection(this.id)">Technical Overview</div>
@@ -87,13 +88,13 @@
             <div class="downloadSection">
                 <h2>Want to give it a try ?</h2>
                 <div class="downloadButton">
-                    <a href="placeholderSetup.txt" download="projectSetup">
+                    <a href="../placeholderSetup.txt" download="projectSetup" class="dlLink">
                         <img src="misc/download.svg" viewbox="0 0 100 100" id="downloadIcon">
                     </a>
                 </div>
                 <h4>Or clone the whole GitHub project here</h4>
                 <div class="downloadButton">
-                    <a href="https://github.com/MaxPrudhomme/P5-Project">
+                    <a href="https://github.com/MaxPrudhomme/P5-Project" class="dlLink">
                         <img src="misc/skills/github.png" viewbox="0 0 100 100" id="githubIcon">
                     </a>
                 </div>
