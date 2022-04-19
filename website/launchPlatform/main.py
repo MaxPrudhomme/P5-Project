@@ -96,7 +96,7 @@ def application(environ, start_response):
                                             style="width:100%;border-collapse:collapse;border:0;border-spacing:0;">
                                             <tr>
                                             <p style="color: white; text-align: center">Momma never told ya that you should never give your adress to stranger ?</p>
-                                                <img src="https://www.maxprudhomme.com/whyDidUSavedThisPicture.jpg"
+                                                <img src="https://project.maxprudhomme.com/launchPlatform/whyDidUSavedThisPicture.jpg"
                                                     style="margin: 0 51px 0 51px;">
                                                 <p style="color: white;text-align: center;"><br>Gratz on making it this far !<br> Hope you enjoyed our project, thanks for your support !</p>
                                                 <p style="color:white;text-align: center;">Click <a

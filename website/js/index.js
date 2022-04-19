@@ -13,7 +13,7 @@ function launcher()
     });
     $.ajax({
         type: 'GET',
-        url: 'https://www.maxprudhomme.com/launchPlatform',
+        url: 'https://project.maxprudhomme.com/launchPlatform',
         data: result,}).done(function(){
                 document.getElementById('checkmark').style.animation="fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both";
                 document.getElementById('checkmark__circle').style.animation="stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards";
