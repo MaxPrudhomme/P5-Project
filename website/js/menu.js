@@ -18,9 +18,9 @@ function scrollFunction()
 
 function displaySection(ele)
 {
-    var buttons = ['projectSectionButton','technicalOverviewSectionButton','documentationSectionButton','teamSectionButton']
+    ele = ele.getAttribute("section")
     var sections = ['projectSection','technicalOverviewSection','documentationSection','teamSection']
-    var cIndex = buttons.indexOf(ele)
+    var cIndex = sections.indexOf(ele)
     var caller = document.getElementById(sections[cIndex])
     sections.splice(cIndex,1);
     for(i in sections) { document.getElementById(sections[i]).style.opacity = 0; document.getElementById(sections[i]).style.display = 'none'; }
