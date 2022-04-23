@@ -1,0 +1,20 @@
+{
+    "username": "JackyLafrite",
+    "userID": "6942",
+    "firstConnection": "21/04/2022",
+    "lastConnection": "21/04/2077",
+    "playerStats":
+    {
+        "winrate": 50,
+        "wins": 10,
+        "looses": 10,
+        "draws": 0
+    },
+    "gameStats":
+    {
+        "average": 5.34,
+        "fastest": 3.48,
+        "longest": 8.12,
+        "winstreak": 3
+    }
+}

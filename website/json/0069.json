@@ -1,0 +1,20 @@
+{
+    "username": "xX_NoobMaster69_Xx",
+    "userID": "0069",
+    "firstConnection": "01/01/2069",
+    "lastConnection": "01/01/6969",
+    "playerStats":
+    {
+        "winrate": 69,
+        "wins": 69,
+        "looses": 31,
+        "draws": 0
+    },
+    "gameStats":
+    {
+        "average": 4.20,
+        "fastest": 3.59,
+        "longest": 6.30,
+        "winstreak": 69
+    }
+}

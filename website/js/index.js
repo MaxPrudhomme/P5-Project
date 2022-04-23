@@ -7,7 +7,7 @@ function launcher()
         document.getElementById('checkmark').style.display= "block"
         document.getElementById('submitArrow').style.marginLeft = '-50px';
     },0500)
-    var result = { };
+    var result = {};
     $.each($('#emailField').serializeArray(), function() {
         result[this.name] = this.value;
     });
