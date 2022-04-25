@@ -3,6 +3,7 @@ from random import randint
 
 game = {
     "player1":{
+        0: 0,
         1: 4,
         2: 4,
         3: 4,
@@ -12,13 +13,15 @@ game = {
         7: 4
         },
     "player2":{
+        0: 0,
         1: 0,
         2: 0,
         3: 0,
         4: 0,
         5: 0,
         6: 0,
-        7: 0}
+        7: 0
+        }
     }
 
 def checkLoose(game):
