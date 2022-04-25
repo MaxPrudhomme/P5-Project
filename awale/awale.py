@@ -3,24 +3,22 @@ from random import randint
 
 game = {
     "player1":{
-        0: 0,
+        0: 0, #Stack Player 1
         1: 4,
         2: 4,
         3: 4,
         4: 4,
         5: 4,
-        6: 4,
-        7: 4
+        6: 4
         },
     "player2":{
-        0: 0,
-        1: 4,
-        2: 4,
-        3: 4,
-        4: 4,
-        5: 4,
         6: 4,
-        7: 4
+        5: 4,
+        4: 4,
+        3: 4,
+        2: 4,
+        1: 4,
+        0: 0  #Stack Player 2
         }
     }
 
@@ -77,22 +75,38 @@ def swapPlayer(player):
         return"player1" #DONE
 
 
-def modifyBoard(game, player, move):
-    #Modify the board according to the 'move' choose by 'player' by moving marbles and removing enemy marbles
+def moveDown(game, player, marblesNumber, currentSpot):
+    #Modify the board by moving marbles down on 'player' side until it reach the Stack. Return the number of marbles left
     #'game' is the current state of the game like represented above
     #'player' is a string with the current player playing
-    #'move' is an int representing the choosen spot between 1 and 7
+    #'marblesNumber' is an int representing the current number of marbles remaining to place
+    #'currentSpot' is an int representing the current spot between 1 and 6
+
+    while marblesNumber > 0 and currentSpot != 0:
+        game[player][currentSpot] += 1
+        currentSpot -= 1
+        marblesNumber -= 1
+    return marblesNumber
+
+
+def modifyBoard(game, player, move):
+    #Main program controlling the changes on the board
+    #'game' is the current state of the game like represented above
+    #'player' is a string with the current player playing
+    #'move' is an int representing the choosen spot between 1 and 6
 
     marblesNumber = game[player][move]
-    for i in range(1, marblesNumber + 1):
-        currentSpot = move - i #Define current spot
-        if currentSpot >= 0:
-            game[player][currentSpot] += 1
-        elif currentSpot < 0:
-            game[swapPlayer(player)][abs(currentSpot)] += 1
-    game[player][move] = 0 #DONE
-
-
+    game[player][move] = 0
+    currentPlayer = player
+    currentSpot = move - 1
+    while marblesNumber > 0:
+        marblesNumber = moveDown(game, currentPlayer, marblesNumber, currentSpot)
+        if marblesNumber > 1 and currentPlayer == player:
+            game[player][0] += 1
+            marblesNumber -= 1
+        currentPlayer = swapPlayer(currentPlayer)
+        currentSpot = 6 
+    print(marblesNumber)
 
 def main(game):
     player = pickRandomPlayer()
@@ -112,4 +126,8 @@ def main(game):
 
         player = swapPlayer(player) #Change current player from 1 -> 2 or 2 -> 1
 
-print(checkMove(game,"player2",5))
+print(game["player1"])
+print(game["player2"])
+modifyBoard(game,'player2',3)
+print(game["player1"])
+print(game["player2"])

@@ -1,1 +1,11 @@
 https://www.youtube.com/watch?v=dQw4w9WgXcQ
+
+    marblesNumber = game[player][move]
+    for i in range(marblesNumber):
+        currentSpot = move - i - 1#Define current spot
+        print(currentSpot)
+        if currentSpot > 0:
+            game[player][currentSpot] += 1
+        elif currentSpot < 0:
+            game[swapPlayer(player)][ 7 + currentSpot] += 1
+    game[player][move] = 0 #DONE
