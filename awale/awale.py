@@ -110,7 +110,7 @@ def modifyBoard(game, player, move):
 
 def main(game):
     player = pickRandomPlayer()
-    while(checkLoose == False):
+    while(checkLoose(game) == False):
 
         start = time.time() #Start 2Min Timer
         try:
