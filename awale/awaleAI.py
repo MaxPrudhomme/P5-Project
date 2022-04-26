@@ -1,38 +1,17 @@
-game = {
-    "player1":{ #IA
-        0: 0, #Stack Player 1
-        1: 4,
-        2: 0,
-        3: 4,
-        4: 4,
-        5: 4,
-        6: 17
-        },
-    "player2":{ #FOE
-        6: 4,
-        5: 4,
-        4: 0,
-        3: 4,
-        2: 0,
-        1: 4,
-        0: 0  #Stack Player 2
-        }
-    }
-
 playerStats = {
-    "player1": {
+    "AI": {
         "min": 1000,
         "average": 0,
         "max": 0
         },
-    "player2": {
+    "FOE": {
         "min": 1000,
         "average": 0,
         "max": 0
         }
     }
 
-potentialActions = { 
+gameAnalysis = { 
     "EHAIFAI": [], #Empty Hole AI Fill AI
     "EHFOEFFOE": [], #Empty Hole FOE Fill FOE
     "EHAIFFOE": [], #Empty Hole AI Fill FOE
@@ -42,11 +21,17 @@ potentialActions = {
     }
 
 priorityActions = {
-    "EHAIFAI": 0,
-    "EHFOEFOE": 0,
-    "EHAIFFOE": 0,
-    "DSFOEFAI": 0,
+    "FFOES": 1,
+    "WSAI": 1,
+    "NWSAI": 1,
+    "DSAIF": 1,
+    "WSAIP": 1,
+    "OPAI": 0,
     }
+
+listActions = ["FFOES", "WSAI", "NWSAI", "DSAIF", "WSAIP", "OPAI"]
+
+potentialActions = []
 
 def swapPlayer(player):
     #Change current player from 1 -> 2 or 2 -> 1
@@ -86,7 +71,7 @@ def simMove(game, player, move, target):
 
 def HolesAIFillAI(game, player):
     #Find hole on player side
-    global potentialActions
+    global gameAnalysis
     potentialSpots = []
     #print("\n" + "Current player : " + player)
     for i in range(1, 7):
@@ -100,16 +85,16 @@ def HolesAIFillAI(game, player):
             #print("Previous Spot : " + str(previousSpot))
             if game[player][previousSpot] % 13 == previousSpot - spot:
                 #print("(" + str(game[player][previousSpot]) + "," + str(previousSpot - spot) + ")")
-                potentialActions["EH" + player + "F" + player].append((spot, previousSpot)) #DONE
+                gameAnalysis["EH" + player + "F" + player].append((spot, previousSpot)) #DONE ( target, solver ) 
 
 def HolesFOEFillFOE(game, player):
     #Find hole on foe side
-    global potentialActions
+    global gameAnalysis
     foe =  swapPlayer(player)
-    HolesAIFillAI(game, foe) #DONE
+    HolesAIFillAI(game, foe) #DONE ( target, solver )
 
 def HolesAIFillFOE(game, player):
-    global potentialActions
+    global gameAnalysis
     foe = swapPlayer(player)
     potentialSpots = []
     for spot in range(1, 7):
@@ -120,45 +105,96 @@ def HolesAIFillFOE(game, player):
         if game[foe][FOESpot] == 0:
             for AISpot in potentialSpots:
                 if simMove(game, player, AISpot, FOESpot) == True:
-                    potentialActions["EHAIFFOE"].append((FOESpot, AISpot)) #DONE
+                    gameAnalysis["EHAIFFOE"].append((FOESpot, AISpot)) #DONE ( solver, target )
 
 def DangerFOEFillAI(game, player):
-    global potentialActions
+    global gameAnalysis
     foe = swapPlayer(player)
-    for FOESpot in potentialActions["EH" + foe + "F" + foe]:
+    for FOESpot in gameAnalysis["EH" + foe + "F" + foe]:
         for AISpot in game[player]:
             if game[player][AISpot] != 0 and AISpot == abs(FOESpot[0] - 7):
-                potentialActions["DS" + foe + "F" + player].append((AISpot, FOESpot[0], FOESpot[1])) #DONE
+                gameAnalysis["DS" + foe + "F" + player].append((AISpot, FOESpot[0], FOESpot[1])) #DONE ( danger, target, solver )
 
 def DangerAIFillFOE(game, player):
     player = swapPlayer(player)
-    DangerFOEFillAI(game, player) #DONE
+    DangerFOEFillAI(game, player) #DONE ( danger, target, solver )
 
 def WeakSpotAI(game, player):
-    global potentialActions
+    global gameAnalysis
     global playerStats
-    for spot in range(1,6):
-        if game[player][spot] == playerStats[player]["max"]:
-            potentialActions["WSAI"].append((game[player][spot], 3))
-        if game[player][spot] > playerStats[player]["max"] and game[player][spot] < 2 * playerStats[player]["max"]:
-            potentialActions["WSAI"].append((game[player][spot], 1))
-        if game[player][spot] > 2 * playerStats[player]["max"] and game[player][spot] != playerStats[player]["max"]:
-            potentialActions["WSAI"].append((game[player][spot], 2))
+    for spot in range(1,7):
+        if game[player][spot] == playerStats[player]["max"] and playerStats[player]["average"] != playerStats[player]["max"]:
+            gameAnalysis["WSAI"].append((spot, 3))
 
-converter(game, "player1", playerStats) #REQUIRED
+        elif game[player][spot] > playerStats[player]["average"] and game[player][spot] < 2 * playerStats[player]["average"]:
+            gameAnalysis["WSAI"].append((spot, 1))
 
-playerStats = getStats(game)
+        elif game[player][spot] > 2 * playerStats[player]["average"] and game[player][spot] != playerStats[player]["max"]:
+            gameAnalysis["WSAI"].append((spot, 2)) #DONE ( danger, priority )
 
-HolesAIFillAI(game,"AI")
-HolesFOEFillFOE(game, "AI")
-HolesAIFillFOE(game, "AI")
-DangerFOEFillAI(game, "AI")
-DangerAIFillFOE(game, "AI")
-WeakSpotAI(game, "AI")
+def master(game, player):
+    global playerStats
+    global gameAnalysis
+    global priorityActions
+    #converter(game, "player1", playerStats) #REQUIRED
+    playerStats = getStats(game)
 
+    HolesAIFillAI(game,"AI")
+    HolesFOEFillFOE(game, "AI")
+    HolesAIFillFOE(game, "AI")
+    DangerFOEFillAI(game, "AI")
+    DangerAIFillFOE(game, "AI")
+    WeakSpotAI(game, "AI")
 
-playerStats = getStats(game)
+    #DEFENSIVE POTENTIAL ACTIONS
+    for AIs in gameAnalysis["DSFOEFAI"]:
+        dictWSAI = dict(gameAnalysis["WSAI"])
+        if AIs[0] in dictWSAI:
+            dictEHAIFFOE = dict(gameAnalysis["EHAIFFOE"])
+            if AIs[1] in dictEHAIFFOE:
+                potentialActions.append((dictEHAIFFOE[AIs[1]], AIs[1], "FFOES", dictWSAI[AIs[0]])) #PRIORITY WSAIp FFOES
+            else:
+                potentialActions.append((AIs[0], AIs[1], "WSAI", dictWSAI[AIs[0]])) #PRIORITY WSAI WSAI
+        else:
+            potentialActions.append((AIs[0], AIs[1], "NWSAI", 1 )) #PRIORITY 1 NWSAI
+    #OFFESIVE POTENTIAL ACTIONS
+    bValue = 0
+    bAction = None
+    for AIs in gameAnalysis["DSAIFFOE"]:
+        #print(AIs)
+        #print(game[swapPlayer(player)][AIs[0]])
+        if game[swapPlayer(player)][AIs[0]] > bValue:
+            bValue = game[swapPlayer(player)][AIs[0]]
+            bAction = (AIs[2], AIs[1], "DSAIF", 2)
+    if bAction != None:
+        potentialActions.append(bAction)
+    #PREVENTIVE POTENTIAL ACTIONS
+    if not gameAnalysis["EHAIFAI"] and not gameAnalysis["EHFOEFFOE"] and not gameAnalysis["EHAIFFOE"] and not gameAnalysis["DSFOEFAI"] and not gameAnalysis["DSAIFFOE"] and gameAnalysis["WSAI"]:
+        for AIs in gameAnalysis["WSAI"]:
+            if AIs[0] > 3:
+                potentialActions.append((AIs[0], AIs[0], "WSAIP", 1))
+    #OPENING POTENTIAL ACTIONS
+    if not gameAnalysis["EHAIFAI"] and not gameAnalysis["EHFOEFFOE"] and not gameAnalysis["EHAIFFOE"] and not gameAnalysis["DSFOEFAI"] and not gameAnalysis["DSAIFFOE"] and not gameAnalysis["WSAI"]:
+        potentialActions.append((1, 1, "OPAI", 2))
+    #CHOOSE BEST MOVE AND RETURN VALUE (did it omg)
+    hPriority = 0
+    cMove = None
+    #print(potentialActions)
+    for move in potentialActions:
+        move = list(move)
+        move[3] = move[3] + priorityActions[move[2]]
+        move = tuple(move)
+        if move[3] > hPriority:
+            hPriority = move[3]
+            cMove = move
+        elif move[3] == hPriority:
+            if listActions.index(move[2]) < listActions.index(cMove[3]):
+                cMove = move
+    return cMove #DONE
 
-print(playerStats)
-print("\n")
-print(potentialActions)
+#print(master(game, "AI"))
+#print(playerStats)
+#print("\n")
+#print(gameAnalysis)
+#print("\n")
+#print(potentialActions)

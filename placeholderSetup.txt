@@ -1,11 +1,25 @@
 https://www.youtube.com/watch?v=dQw4w9WgXcQ
 
-    marblesNumber = game[player][move]
-    for i in range(marblesNumber):
-        currentSpot = move - i - 1#Define current spot
-        print(currentSpot)
-        if currentSpot > 0:
-            game[player][currentSpot] += 1
-        elif currentSpot < 0:
-            game[swapPlayer(player)][ 7 + currentSpot] += 1
-    game[player][move] = 0 #DONE
+    while marblesNumber > 0:
+        if move == 1 and currentPlayer == player:
+            game[player][0] += 1
+            marblesNumber -= 1
+        marblesNumber = moveDown(player, marblesNumber, currentSpot, currentPlayer)
+        currentPlayer = swapPlayer(currentPlayer)
+        currentSpot = 6 
+
+
+
+
+
+
+            while marblesNumber > 0 and currentSpot != 0:
+        game[currentPlayer][currentSpot] += 1
+        currentSpot -= 1
+        marblesNumber -= 1
+    if marblesNumber > 0: 
+        return marblesNumber
+    elif marblesNumber == 0 and currentPlayer == player and game[player][currentSpot] == 1:
+        print("Mrb Nb : " + str(marblesNumber))
+        #moveToStack(player, currentSpot)
+    return 0

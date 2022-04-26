@@ -3,7 +3,7 @@ from random import randint
 
 game = {
     "player1":{
-        0: 0,
+        0: 0, #Stack player 1
         1: 4,
         2: 4,
         3: 4,
@@ -12,13 +12,13 @@ game = {
         6: 4
         },
     "player2":{
-        0: 0,
-        1: 0,
-        2: 0,
-        3: 0,
-        4: 0,
-        5: 0,
-        6: 0
+        6: 4,
+        5: 4,
+        4: 4,
+        3: 4,
+        2: 4,
+        1: 4,
+        0: 0 #Stack player 2
         }
     }
 
@@ -71,5 +71,4 @@ def main(game):
             return player + " lost the game" 
 
         modifyBoard(game, player, nextMove) #Move marbles if the program has not stopped which means the next move is valid and the program gave it under the 2 min mark.
-
         player = swapPlayer(player)
