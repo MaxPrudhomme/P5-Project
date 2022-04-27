@@ -1,115 +1,114 @@
-import time
-from random import randint
-
-game = {
-    "player1":{
-        0: 0,
-        1: 4,
-        2: 4,
-        3: 4,
-        4: 4,
-        5: 4,
-        6: 4,
-        7: 4
-        },
-    "player2":{
-        0: 0,
-        1: 4,
-        2: 4,
-        3: 4,
-        4: 4,
-        5: 4,
-        6: 4,
-        7: 4
-        }
-    }
-
-def pickRandomPlayer():
-    #Pick a random number between 1 - 2 and return the string corresponding to the first player playing
-
-    player = randint(1,2)
-    if player == 1:
-        return "player1"
-    return "player2" #DONE
+JOUEUR_1 = 1
+JOUEUR_2 = 2
 
 
-def checkLoose(game):
-    #Check for a loosing player
-    #'game' is the current state of the game like represented above
+def jeu_afficher(jeu):
+    display = ["            Joueur  1            ", "      6   5   4   3   2   1      ", "     --- --- --- --- --- ---     ", "", "---- --- --- --- --- --- --- ----", "", "---- --- --- --- --- --- --- ----", "    ", "     --- --- --- --- --- ---     ", "      1   2   3   4   5   6      ", "            Joueur  2            "]
 
-    for player in game:
-        loose = True
-        spot = 1
-        while loose == True and spot < 8:
-            if game[player][spot] != 0:
-                loose = False
-            spot += 1
-        if loose == True:
+    cLine = ""
+    
+    cLine = "    "
+    for i in range(6, 0, -1):
+        cLine +=  " |" + str(jeu[i]) + "|"
+    cLine += "     "
+    display[3] = cLine
+
+
+    cLine = "|"
+    cLine += str(jeu[7])
+    cLine += "|                         |"
+    cLine += str(jeu[14])
+    cLine += "|"
+    display[5] = cLine
+
+    cLine = "    "
+    for i in range(8, 14):
+        cLine +=  " |" + str(jeu[i]) + "|"
+    cLine += "     "
+    display[7] = cLine
+
+    select = []
+
+
+    print("-------------------------------------")
+    for i in range(0, 11):
+        select = []
+        select.append(display[i])
+        print(select) #DONE
+    print("-------------------------------------")
+    print("\n") #DONE
+
+def jeu_initialiser():
+    #jeu = [0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 0]
+    jeu = [0, 4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0]
+    return jeu #DONE
+
+def adversaire(joueur): #DONE
+    if joueur == 1:
+        return JOUEUR_2
+    return JOUEUR_1 #DONE
+ 
+def trou_suivant(trou, joueur):
+    if joueur == JOUEUR_1:
+        if trou == 13:
+            return 1
+    if joueur == JOUEUR_2:
+        if trou == 6:
+            return 8
+        if trou == 14:
+            return 1
+    return trou + 1 #DONE
+
+def jeu_est_termine(jeu):
+    trou = 1
+    termine = [True, True]
+    for joueur in range(0,2):
+        while termine[joueur] == True and ( trou < 7 or (trou > 7 and trou < 14 )):
+            if jeu[trou] != 0:
+                termine[joueur] = False
+            trou += 1
+        trou = 8
+        if termine[joueur] == True:
+            return True
+    return False #DONE
+ 
+def jeu_ramasser_billes(jeu):
+    modifieur = 0
+    for joueur in range(1, 3):
+        sac = 0
+        if joueur == JOUEUR_2:
+            modifieur = 7
+        for trou in range(1, 7):
+            sac += jeu[trou + modifieur]
+            jeu[trou + modifieur] = 0
+        jeu[7 + modifieur] = sac #DONE
+
+def joueur_peut_jouer(jeu, joueur):
+    modifieur = 0
+    if joueur == JOUEUR_2:
+        modifieur = 7
+    for trou in range(1, 7):
+        if jeu[trou + modifieur] != 0:
             return True
     return False #DONE
 
+def joueur_peut_jouer_trou(jeu, joueur, trou):
+    if (joueur == JOUEUR_1 and jeu[trou] != 0) or (joueur == JOUEUR_2 and jeu[trou + 7] != 0):
+        return True
+    return False #DONE
+   
+def joue(jeu, joueur, trou):
+    if joueur == JOUEUR_2:
+        trou += 7
+    billes = jeu[trou]
+    jeu[trou] = 0
+    while billes > 0:
+        trou = trou_suivant(trou, joueur)
+        jeu[trou] += 1
+        billes -= 1 #DONE 
+    print(jeu)
 
-def pickMove(game, player):
-    #Pick a move for the 'player'
-    #'game' is the current state of the game like represented above
-    #'player' is a string with the current player playing
-    pass
-
-
-def checkMove(game, player, move): 
-    #Check the choosen move is possible. Return True or False depending on the case
-    #'game' is the current state of the game like represented above
-    #'player' is a string with the current player playing
-    #'move' is an int representing the choosen spot between 1 and 7
-    
-    if move == 0 or game[player][move] == 0:
-        return False
-    return True #DONE
-
-
-def swapPlayer(player):
-    #Change current player from 1 -> 2 or 2 -> 1
-    #'player' is a string with the current player playing
-
-    if player == "player1": 
-        return "player2" 
-    else:
-        return"player1" #DONE
-
-
-def modifyBoard(game, player, move):
-    #Modify the board according to the 'move' choose by 'player' by moving marbles and removing enemy marbles
-    #'game' is the current state of the game like represented above
-    #'player' is a string with the current player playing
-    #'move' is an int representing the choosen spot between 1 and 7
-
-    marblesNumber = game[player][move]
-    for i in range(1, marblesNumber + 1):
-        currentSpot = move - i #Define current spot
-        if currentSpot >= 0:
-            game[player][currentSpot] += 1
-        elif currentSpot < 0:
-            game[swapPlayer(player)][abs(currentSpot)] += 1
-    game[player][move] = 0 #DONE
-
-
-
-def main(game):
-    player = pickRandomPlayer()
-    while(checkLoose == False):
-
-        start = time.time() #Start 2Min Timer
-        try:
-            nextMove = pickMove(game,player) #Encapsulated in a try method to prevent crashes
-        except:
-            nextMove = -1
-        end = time.time() #End 2Min Timer
-
-        if nextMove == -1 or checkMove(game,player,nextMove) == False or start - end > 120: #Check if the nextMove exist or if the program crashed or if the move is not valid or if it took more than 2 minutes
-            return player + " lost the game" 
-
-        modifyBoard(game, player, nextMove) #Move marbles if the program has not stopped which means the next move is valid and the program gave it under the 2 min mark.
-
-        player = swapPlayer(player) #Change current player from 1 -> 2 or 2 -> 1
-
-print(checkMove(game,"player2",5))
+def jeu_grenier(jeu, joueur):
+    if joueur == JOUEUR_1:
+        return jeu[7]
+    return jeu[14] #DONE
