@@ -1,193 +1,123 @@
-import time
-from random import randint
-from awaleAI import *
-import os
-
-game = {
-    "AI":{
-        0: 0, #Stack Player 1
-        1: 4,
-        2: 4,
-        3: 4,
-        4: 4,
-        5: 4,
-        6: 4
-        },
-    "FOE":{
-        6: 4,
-        5: 4,
-        4: 4,
-        3: 4,
-        2: 4,
-        1: 4,
-        0: 0  #Stack Player 2
-        }
-    }
-
-def pickRandomPlayer():
-    #Pick a random number between 1 - 2 and return the string corresponding to the first player playing
-
-    player = randint(1,2)
-    if player == 1:
-        return "player1"
-    return "player2" #DONE
+JOUEUR_1 = 1
+JOUEUR_2 = 2
 
 
-def checkLoose():
-    #Check for a loosing player
-    #'game' is the current state of the game like represented above
+def jeu_afficher(jeu):
+    display = ["               Joueur  1               ", "      6    5    4    3    2    1       ", "     ---- ---- ---- ---- ---- ----     ", "", "---- ---- ---- ---- ---- ---- ---- ----", "", "---- ---- ---- ---- ---- ---- ---- ----", "    ", "     ---- ---- ---- ---- ---- ----     ", "      1    2    3    4    5    6       ", "               Joueur  2               "]
 
-    global game
-    for player in game:
-        loose = True
-        spot = 1
-        while loose == True and spot < 8:
-            if game[player][spot] != 0:
-                loose = False
-            spot += 1
-        if loose == True:
+    cLine = ""
+    
+    cLine = "    "
+    for i in range(6, 0, -1):
+        cLine += " |"
+        if jeu[i] < 10:
+            cLine += "0"
+        cLine += str(jeu[i]) + "|"
+    cLine += "     "
+    display[3] = cLine
+
+
+    cLine = "|"
+    if jeu[7] < 10:
+        cLine += "0"
+    cLine += str(jeu[7])
+    cLine += "|                               |"
+    if jeu[14] < 10:
+        cLine += "0"
+    cLine += str(jeu[14])
+    cLine += "|"
+    display[5] = cLine
+
+    cLine = "    "
+    for i in range(8, 14):
+        cLine += " |"
+        if jeu[i] < 10:
+            cLine += "0"
+        cLine += str(jeu[i]) + "|"
+    cLine += "     "
+    display[7] = cLine
+
+    select = []
+
+
+    print("-------------------------------------------")
+    for i in range(0, 11):
+        select = []
+        select.append(display[i])
+        print(select) #DONE
+    print("-------------------------------------------")
+    print("\n") #DONE
+
+def jeu_initialiser():
+    #jeu = [0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 0]
+    jeu = [0, 4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0]
+    return jeu #DONE
+
+def adversaire(joueur): #DONE
+    if joueur == 1:
+        return JOUEUR_2
+    return JOUEUR_1 #DONE
+ 
+def trou_suivant(trou, joueur):
+    if joueur == JOUEUR_1:
+        if trou == 13:
+            return 1
+    if joueur == JOUEUR_2:
+        if trou == 6:
+            return 8
+        if trou == 14:
+            return 1
+    return trou + 1 #DONE
+
+def jeu_est_termine(jeu):
+    trou = 1
+    termine = [True, True]
+    for joueur in range(0,2):
+        while termine[joueur] == True and ( trou < 7 or (trou > 7 and trou < 14 )):
+            if jeu[trou] != 0:
+                termine[joueur] = False
+            trou += 1
+        trou = 8
+        if termine[joueur] == True:
+            return True
+    return False #DONE
+ 
+def jeu_ramasser_billes(jeu):
+    modifieur = 0
+    for joueur in range(1, 3):
+        sac = 0
+        if joueur == JOUEUR_2:
+            modifieur = 7
+        for trou in range(1, 7):
+            sac += jeu[trou + modifieur]
+            jeu[trou + modifieur] = 0
+        jeu[7 + modifieur] = sac #DONE
+
+def joueur_peut_jouer(jeu, joueur):
+    modifieur = 0
+    if joueur == JOUEUR_2:
+        modifieur = 7
+    for trou in range(1, 7):
+        if jeu[trou + modifieur] != 0:
             return True
     return False #DONE
 
+def joueur_peut_jouer_trou(jeu, joueur, trou):
+    if (joueur == JOUEUR_1 and jeu[trou] != 0) or (joueur == JOUEUR_2 and jeu[trou + 7] != 0):
+        return True
+    return False #DONE
+   
+def joue(jeu, joueur, trou):
+    if joueur == JOUEUR_2:
+        trou += 7
+    billes = jeu[trou]
+    jeu[trou] = 0
+    while billes > 0:
+        trou = trou_suivant(trou, joueur)
+        jeu[trou] += 1
+        billes -= 1 #DONE 
 
-def pickMove(player):
-    #Pick a move for the 'player'
-    #'game' is the current state of the game like represented above
-    #'player' is a string with the current player playing
-
-    global game
-    if player == "AI":
-        print("AI is choosing")
-        nextMove = master(game,"AI")
-        print(player + " : " + str(nextMove))
-        return nextMove[0]
-    elif player == "FOE":
-        print("FOE is choosing")
-        nextMove = int(input())
-        print(player + " : " + str(nextMove))
-        return nextMove
-
-
-def checkMove(player, move):
-    #Check the choosen move is possible. Return True or False depending on the case
-    #'game' is the current state of the game like represented above
-    #'player' is a string with the current player playing
-    #'move' is an int representing the choosen spot between 1 and 6
-
-    global game
-    if move < 1 or move > 6  or game[player][move] == 0:
-        return False
-    return True #DONE
-
-
-def swapPlayer(player):
-    #Change current player from 1 -> 2 or 2 -> 1
-    #'player' is a string with the current player playing
-
-    if player == "AI": 
-        return "FOE" 
-    else:
-        return "AI" #DONE
-
-
-def moveDown(player, marblesNumber, currentSpot, currentPlayer):
-    #Modify the board by moving marbles down on 'player' side until it reach the Stack. Return the number of marbles left
-    #'game' is the current state of the game like represented above
-    #'player' is a string with the current player playing
-    #'marblesNumber' is an int representing the current number of marbles remaining to place
-    #'currentSpot' is an int representing the current spot between 1 and 6
-
-    global game
-    while currentSpot != 0 and marblesNumber > 0:
-        game[currentPlayer][currentSpot] += 1
-        currentSpot -= 1
-        marblesNumber -= 1
-    return (marblesNumber, currentSpot + 1)
-
-
-def moveToStack(player, currentSpot):
-    global game
-    game[player][0] += game[swapPlayer(player)][7 - currentSpot]
-    game[swapPlayer(player)][7 - currentSpot] = 0
-
-
-def modifyBoard(player, move):
-    #Main program controlling the changes on the board
-    #'game' is the current state of the game like represented above
-    #'player' is a string with the current player playing
-    #'move' is an int representing the choosen spot between 1 and 6
-
-    global game
-    marblesNumber = game[player][move] #Marbles in the 'move' spot
-    game[player][move] = 0 #Reset marbles number in the spot 'move'
-    currentPlayer = player #Define current player
-    currentSpot = move - 1 #Define current spot
-
-    while marblesNumber != 0:
-        mDReturn = moveDown(player, marblesNumber, currentSpot, currentPlayer)
-        marblesNumber = mDReturn[0]
-        currentSpot = mDReturn[1]
-        if marblesNumber > 0 and currentSpot == 0 and currentPlayer == player:
-            game[player][0] += 1
-            marblesNumber -= 1
-        #print(currentPlayer)
-        #print(currentSpot)
-        #print(game[player][currentSpot])
-        if currentPlayer == player and currentSpot > 0 and game[player][currentSpot] == 1:
-            print("Should win points")
-            moveToStack(player, currentSpot)
-        currentSpot = 6
-        currentPlayer = swapPlayer(player)
-
-
-
-    
-
-def display():
-    global game
-    print("--------------------------")
-    print(game["AI"])
-    print("\n")
-    print(game["FOE"])
-    print("--------------------------")
-
-
-def main(game):
-    player = "AI"
-    while(checkLoose() == False):
-        start = time.time() #Start 2Min Timer
-        try:
-            nextMove = pickMove(player) #Encapsulated in a try method to prevent crashes
-        except:
-            nextMove = -1
-        end = time.time() #End 2Min Timer
-
-        if nextMove == -1:
-            print(player + " lost the game move -1")
-            return 0
-
-        if checkMove(player, nextMove) == False:
-            print(player + " lost the game move unplayable")
-            return 0
-
-        if start - end > 120: #Check if the nextMove exist or if the program crashed or if the move is not valid or if it took more than 2 minutes
-            print(player + " lost the game too long")
-            return 0
-        #print(nextMove)
-
-        modifyBoard(player, nextMove) #Move marbles if the program has not stopped which means the next move is valid and the program gave it under the 2 min mark.
-
-        display()
-
-        player = swapPlayer(player) #Change current player from 1 -> 2 or 2 -> 1
-
-
-display()
-main(game)
-
-
-#modifyBoard("FOE", 3)
-#display()
-
-#modifyBoard("FOE", 5)
-#display()
+def jeu_grenier(jeu, joueur):
+    if joueur == JOUEUR_1:
+        return jeu[7]
+    return jeu[14] #DONE
