@@ -1,6 +1,6 @@
 import numpy as np
 import awale as aw
- 
+import awaleAI as ai
  
 le_joueur_courant = aw.JOUEUR_1
 le_jeu = aw.jeu_initialiser()
@@ -9,7 +9,12 @@ def demande( jeu, joueur ):
     n = 0
     while True:
         print( "Action Joueur ", joueur, " ? ", end='')
-        n = int(input())
+        if joueur == aw.JOUEUR_1:
+            n = ai.master(le_jeu, le_joueur_courant)
+            print(n)
+            n = n[0]
+        elif joueur == aw.JOUEUR_2:
+            n = int(input())
         if aw.joueur_peut_jouer_trou( jeu, joueur, n):
             break
     return n
