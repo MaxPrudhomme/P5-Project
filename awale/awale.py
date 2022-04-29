@@ -3,39 +3,49 @@ JOUEUR_2 = 2
 
 
 def jeu_afficher(jeu):
-    display = ["            Joueur  1            ", "      6   5   4   3   2   1      ", "     --- --- --- --- --- ---     ", "", "---- --- --- --- --- --- --- ----", "", "---- --- --- --- --- --- --- ----", "    ", "     --- --- --- --- --- ---     ", "      1   2   3   4   5   6      ", "            Joueur  2            "]
+    display = ["               Joueur  1               ", "      6    5    4    3    2    1       ", "     ---- ---- ---- ---- ---- ----     ", "", "---- ---- ---- ---- ---- ---- ---- ----", "", "---- ---- ---- ---- ---- ---- ---- ----", "    ", "     ---- ---- ---- ---- ---- ----     ", "      1    2    3    4    5    6       ", "               Joueur  2               "]
 
     cLine = ""
     
     cLine = "    "
     for i in range(6, 0, -1):
-        cLine +=  " |" + str(jeu[i]) + "|"
+        cLine += " |"
+        if jeu[i] < 10:
+            cLine += "0"
+        cLine += str(jeu[i]) + "|"
     cLine += "     "
     display[3] = cLine
 
 
     cLine = "|"
+    if jeu[7] < 10:
+        cLine += "0"
     cLine += str(jeu[7])
-    cLine += "|                         |"
+    cLine += "|                               |"
+    if jeu[14] < 10:
+        cLine += "0"
     cLine += str(jeu[14])
     cLine += "|"
     display[5] = cLine
 
     cLine = "    "
     for i in range(8, 14):
-        cLine +=  " |" + str(jeu[i]) + "|"
+        cLine += " |"
+        if jeu[i] < 10:
+            cLine += "0"
+        cLine += str(jeu[i]) + "|"
     cLine += "     "
     display[7] = cLine
 
     select = []
 
 
-    print("-------------------------------------")
+    print("-------------------------------------------")
     for i in range(0, 11):
         select = []
         select.append(display[i])
         print(select) #DONE
-    print("-------------------------------------")
+    print("-------------------------------------------")
     print("\n") #DONE
 
 def jeu_initialiser():
@@ -106,7 +116,6 @@ def joue(jeu, joueur, trou):
         trou = trou_suivant(trou, joueur)
         jeu[trou] += 1
         billes -= 1 #DONE 
-    print(jeu)
 
 def jeu_grenier(jeu, joueur):
     if joueur == JOUEUR_1:

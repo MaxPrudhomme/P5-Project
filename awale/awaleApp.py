@@ -8,7 +8,7 @@ le_jeu = aw.jeu_initialiser()
 def demande( jeu, joueur ):
     n = 0
     while True:
-        print( "quel trou jouer joueur ", joueur, " ? ", end='')
+        print( "Action Joueur ", joueur, " ? ", end='')
         n = int(input())
         if aw.joueur_peut_jouer_trou( jeu, joueur, n):
             break
@@ -29,8 +29,6 @@ while not aw.jeu_est_termine( le_jeu ):
         if le_joueur_courant == aw.JOUEUR_2:
             trou = demande( le_jeu, le_joueur_courant )
             aw.joue( le_jeu, le_joueur_courant, trou )
-           
- 
     else:
         print("Le joueur ", le_joueur_courant," ne peut pas jouer")
  
