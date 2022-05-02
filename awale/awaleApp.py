@@ -13,6 +13,7 @@ def demande( jeu, joueur ):
             n = ai.master(le_jeu, le_joueur_courant)
             print(n)
             n = n[0]
+            #n = int(input())
         elif joueur == aw.JOUEUR_2:
             n = int(input())
         if aw.joueur_peut_jouer_trou( jeu, joueur, n):
@@ -39,7 +40,7 @@ while not aw.jeu_est_termine( le_jeu ):
  
     le_joueur_courant = aw.adversaire( le_joueur_courant )
   
-aw.jeu_ramasser_billes( le_jeu )
+#aw.jeu_ramasser_billes( le_jeu )
 aw.jeu_afficher( le_jeu )
 grenier_1 = jeu_grenier( le_jeu, aw.JOUEUR_1 )
 grenier_2 = jeu_grenier( le_jeu, aw.JOUEUR_2 )

@@ -108,14 +108,22 @@ def joueur_peut_jouer_trou(jeu, joueur, trou):
     return False #DONE
    
 def joue(jeu, joueur, trou):
+    modifieur = 0
     if joueur == JOUEUR_2:
         trou += 7
+        modifieur = 7
     billes = jeu[trou]
     jeu[trou] = 0
     while billes > 0:
         trou = trou_suivant(trou, joueur)
         jeu[trou] += 1
-        billes -= 1 #DONE 
+        billes -= 1
+    if jeu[trou] == 1:
+       jeu[7 + modifieur] += jeu[abs(trou - 14)] 
+       jeu[abs(trou - 14)] = 0
+    if jeu_est_termine(jeu):
+        jeu_ramasser_billes(jeu)
+        #DONE TERMINER LE RAMASSAGE DES BILLES LORSQUE 1
 
 def jeu_grenier(jeu, joueur):
     if joueur == JOUEUR_1:

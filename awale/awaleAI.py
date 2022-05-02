@@ -39,8 +39,6 @@ listActions = ["FFOES", "WSAI", "NWSAI", "DSAIF", "WSAIP", "OPAI"]
 
 potentialActions = []
 
-oldGame = [0, 17, 1, 0, 4, 0, 4, 0, 15, 3, 0, 4, 0, 4, 0]
-
 def swapPlayer(player):
     if player == "AI":
         return "FOE"
@@ -58,6 +56,11 @@ def converter(oldGame, game, player):
     for spot in range(1, 8):
         game["FOE"][abs(7 - spot)] = oldGame[spot + modifier] 
     return "AI" #DONE
+
+def inverser(cMove):
+    cMove = list(cMove)
+    cMove[0] = abs(cMove[0] - 7)
+    return tuple(cMove)
 
 def getStats(game):
     for player in game:
@@ -133,12 +136,50 @@ def analyze(game, player):
     DAIFFOE(game, player)  
     WSAI(game, player) #DONE
 
-def master(game, player):
+def master(oldGame, player):
     player = converter(oldGame, game, player) #CONVERT GAME FROM LIST TO DICT FORMAT
     analyze(game, player) #ANALYZE CURRENT STATE OF THE GAME
-
-    print(playerStats)
-    print(game)
-
-master(game, 1)
-
+    #DEFENSIVE POTENTIAL ACTIONS
+    for AIs in gameAnalysis["DFOEFAI"]:
+        dictWSAI = dict(gameAnalysis["WSAI"])
+        if AIs[0] in dictWSAI:
+            dictEHAIFFOE = dict(gameAnalysis["EHAIFFOE"])
+            if AIs[1] in dictEHAIFFOE:
+                potentialActions.append((dictEHAIFFOE[AIs[1]], AIs[1], "FFOES", dictWSAI[AIs[0]])) #PRIORITY WSAIp FFOES
+            else:
+                potentialActions.append((AIs[0], AIs[1], "WSAI", dictWSAI[AIs[0]])) #PRIORITY WSAI WSAI
+        else:
+            potentialActions.append((AIs[0], AIs[1], "NWSAI", 1 )) #PRIORITY 1 NWSAI
+    #OFFESIVE POTENTIAL ACTIONS
+    bValue = 0
+    bAction = None
+    for AIs in gameAnalysis["DAIFFOE"]:
+        #print(AIs)
+        #print(game[swapPlayer(player)][AIs[0]])
+        if game[swapPlayer(player)][AIs[0]] > bValue:
+            bValue = game[swapPlayer(player)][AIs[0]]
+            bAction = (AIs[2], AIs[1], "DSAIF", 2)
+    if bAction != None:
+        potentialActions.append(bAction)
+    #PREVENTIVE POTENTIAL ACTIONS
+    if not gameAnalysis["EHAIFAI"] and not gameAnalysis["EHFOEFFOE"] and not gameAnalysis["EHAIFFOE"] and not gameAnalysis["DFOEFAI"] and not gameAnalysis["DAIFFOE"] and gameAnalysis["WSAI"]:
+        for AIs in gameAnalysis["WSAI"]:
+            if AIs[0] > 3:
+                potentialActions.append((AIs[0], AIs[0], "WSAIP", 1))
+    #OPENING POTENTIAL ACTIONS
+    if not gameAnalysis["EHAIFAI"] and not gameAnalysis["EHFOEFFOE"] and not gameAnalysis["DFOEFAI"] and not gameAnalysis["DAIFFOE"] and not gameAnalysis["WSAI"]:
+        potentialActions.append((1, 1, "OPAI", 2))
+    #CHOOSE BEST MOVE AND RETURN VALUE (did it omg)
+    hPriority = 0
+    cMove = None
+    for move in potentialActions:
+        move = list(move)
+        move[3] = move[3] + priorityActions[move[2]]
+        move = tuple(move)
+        if move[3] > hPriority:
+            hPriority = move[3]
+            cMove = move
+        elif move[3] == hPriority:
+            if listActions.index(move[2]) < listActions.index(cMove[2]):
+                cMove = move
+    return inverser(cMove) #DONE
