@@ -49,8 +49,8 @@ def jeu_afficher(jeu):
     print("\n") #DONE
 
 def jeu_initialiser():
-    #jeu = [0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 0]
-    jeu = [0, 4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0]
+    jeu = [0, 0, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0]
+    #jeu = [0, 4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0]
     return jeu #DONE
 
 def adversaire(joueur): #DONE

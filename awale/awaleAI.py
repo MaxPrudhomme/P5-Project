@@ -139,6 +139,7 @@ def analyze(game, player):
 def master(oldGame, player):
     player = converter(oldGame, game, player) #CONVERT GAME FROM LIST TO DICT FORMAT
     analyze(game, player) #ANALYZE CURRENT STATE OF THE GAME
+    print(gameAnalysis)
     #DEFENSIVE POTENTIAL ACTIONS
     for AIs in gameAnalysis["DFOEFAI"]:
         dictWSAI = dict(gameAnalysis["WSAI"])
@@ -150,7 +151,7 @@ def master(oldGame, player):
                 potentialActions.append((AIs[0], AIs[1], "WSAI", dictWSAI[AIs[0]])) #PRIORITY WSAI WSAI
         else:
             potentialActions.append((AIs[0], AIs[1], "NWSAI", 1 )) #PRIORITY 1 NWSAI
-    #OFFESIVE POTENTIAL ACTIONS
+    #OFFENSIVE POTENTIAL ACTIONS
     bValue = 0
     bAction = None
     for AIs in gameAnalysis["DAIFFOE"]:
@@ -168,7 +169,11 @@ def master(oldGame, player):
                 potentialActions.append((AIs[0], AIs[0], "WSAIP", 1))
     #OPENING POTENTIAL ACTIONS
     if not gameAnalysis["EHAIFAI"] and not gameAnalysis["EHFOEFFOE"] and not gameAnalysis["DFOEFAI"] and not gameAnalysis["DAIFFOE"] and not gameAnalysis["WSAI"]:
-        potentialActions.append((1, 1, "OPAI", 2))
+        for spot in range(1, 7):
+            print(game[player][spot])
+            if game[player][spot] != 0:
+                potentialActions.append((spot, spot, "OPAI", 2))
+                break
     #CHOOSE BEST MOVE AND RETURN VALUE (did it omg)
     hPriority = 0
     cMove = None
@@ -182,4 +187,5 @@ def master(oldGame, player):
         elif move[3] == hPriority:
             if listActions.index(move[2]) < listActions.index(cMove[2]):
                 cMove = move
+    print(potentialActions)
     return inverser(cMove) #DONE
