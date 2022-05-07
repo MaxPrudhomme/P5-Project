@@ -3,6 +3,12 @@ JOUEUR_2 = 2
 
 
 def jeu_afficher(jeu):
+    print("\n")
+    print("\n")
+    print("\n")
+    print("\n")
+    print("\n")
+    print("\n")
     display = ["               Joueur  1               ", "      6    5    4    3    2    1       ", "     ---- ---- ---- ---- ---- ----     ", "", "---- ---- ---- ---- ---- ---- ---- ----", "", "---- ---- ---- ---- ---- ---- ---- ----", "    ", "     ---- ---- ---- ---- ---- ----     ", "      1    2    3    4    5    6       ", "               Joueur  2               "]
 
     cLine = ""
@@ -49,8 +55,8 @@ def jeu_afficher(jeu):
     print("\n") #DONE
 
 def jeu_initialiser():
-    jeu = [0, 0, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0]
-    #jeu = [0, 4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0]
+    #jeu = [0, 0, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0]
+    jeu = [0, 4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0]
     return jeu #DONE
 
 def adversaire(joueur): #DONE
@@ -91,7 +97,7 @@ def jeu_ramasser_billes(jeu):
         for trou in range(1, 7):
             sac += jeu[trou + modifieur]
             jeu[trou + modifieur] = 0
-        jeu[7 + modifieur] = sac #DONE
+        jeu[7 + modifieur] += sac #DONE
 
 def joueur_peut_jouer(jeu, joueur):
     modifieur = 0
@@ -123,7 +129,7 @@ def joue(jeu, joueur, trou):
        jeu[abs(trou - 14)] = 0
     if jeu_est_termine(jeu):
         jeu_ramasser_billes(jeu)
-        #DONE TERMINER LE RAMASSAGE DES BILLES LORSQUE 1
+        #DONE
 
 def jeu_grenier(jeu, joueur):
     if joueur == JOUEUR_1:
