@@ -76,6 +76,42 @@ def minimax(game, player, depth, maximizing):
             bestMove = move
         return bestMove, minEval #DONE?
 
-def master(game, player, depth):
+def alphaBeta(game, player, depth, alpha, beta, maximizing):
+    if depth == 0 or state(game):
+        return None, eval(game, player)
+    if maximizing:
+        moves = getMoves(game, player)
+        maxEval = -math.inf
+        bestMove = moves[0]
+        for move in moves:
+            gameCopy = copy.deepcopy(game)
+            simGame = sim(gameCopy, player, move)
+            cEval = alphaBeta(simGame, player, depth - 1, alpha, beta, False)[1]
+            if cEval > maxEval:
+                maxEval = cEval
+                bestMove = move
+            alpha = max(alpha, cEval)
+            if beta <= alpha:
+                break
+        return bestMove, maxEval
+
+    else:
+        moves = getMoves(game, swapPlayer(player))
+        minEval = math.inf
+        bestMove = moves[0]
+        for move in moves:
+            gameCopy = copy.deepcopy(game)
+            simGame = sim(gameCopy, player, move)
+            cEval = alphaBeta(simGame, player, depth - 1, alpha, beta, True)[1]
+            if cEval < minEval:
+                minEval = cEval
+                bestMove = move
+            beta = min(beta, cEval)
+            if beta <= alpha:
+                break
+        return bestMove, minEval 
+
+def master(game, player):
     player = converter(player)
-    return minimax(game, player, depth, True)[0]
+    return alphaBeta(game, player, 16, -math.inf, math.inf, True)[0]
+    #return minimax(game, player, depth, True)[0]

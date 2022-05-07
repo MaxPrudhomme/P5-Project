@@ -1,5 +1,6 @@
 import awaleMinMax as ai
 import time, concurrent.futures, copy, math
+from functools import partial
 
 def getMoves(game, player):
     moves = []
@@ -54,9 +55,12 @@ def minimax(game, player, depth, alpha, beta, maximizing):
             gameCopy = copy.deepcopy(game)
             simGame = sim(gameCopy, player, move)
             cEval = minimax(simGame, player, depth - 1, alpha, beta, False)[1]
-        if cEval > maxEval:
-            maxEval = cEval
-            bestMove = move
+            if cEval > maxEval:
+                maxEval = cEval
+                bestMove = move
+            alpha = max(alpha, cEval)
+            if beta <= alpha:
+                break
         return bestMove, maxEval
 
     else:
@@ -66,23 +70,28 @@ def minimax(game, player, depth, alpha, beta, maximizing):
         for move in moves:
             gameCopy = copy.deepcopy(game)
             simGame = sim(gameCopy, player, move)
-            cEval = minimax(simGame, player, depth - 1, True)[1]
-        if cEval < minEval:
-            minEval = cEval
-            bestMove = move
+            cEval = minimax(simGame, player, depth - 1, alpha, beta, True)[1]
+            if cEval < minEval:
+                minEval = cEval
+                bestMove = move
+            beta = min(beta, cEval)
+            if beta <= alpha:
+                break
         return bestMove, minEval 
 
-def firstLayerThread(game):
+def firstLayerThread(depth, game):
     global player
-    return minimax(game, player, 8, False)
+    print("Depth : " + str(depth))
+    return minimax(game, player, depth, -math.inf, math.inf, False)
 
-def firstLayerThreading(game, player):
+def firstLayerThreading(game, player, depth):
     with concurrent.futures.ThreadPoolExecutor() as executor:
         moves = getMoves(game, player)
         firstLayerMap = []
         for move in moves:
             firstLayerMap.append(sim(copy.deepcopy(game), player, move))
-        results = executor.map(firstLayerThread, firstLayerMap)
+        partialFLT = partial(firstLayerThread, depth)
+        results = executor.map(partialFLT, firstLayerMap)
         firstLayerResults = []
         for result in results:
             firstLayerResults.append(result)
@@ -94,25 +103,25 @@ def firstLayerThreading(game, player):
                 bestMove = result[0]
         return bestMove, maxEval
 
-
-def speedTest(game, player):
-    firstLayerStart = time.perf_counter()
-    firstLayerThreading(game, player)
-    firstLayerEnd = time.perf_counter()
-
-    print("Switching Method")
-
-    minimaxStart = time.perf_counter()
-    minimax(game, player, 9, True)
-    minimaxEnd = time.perf_counter()
-
-    print("Minimax Speed = " + str(minimaxEnd - minimaxStart))
-    print("First Layer Speed = " + str(firstLayerEnd  - firstLayerStart))
-
+def speedTestDepth(game, player):
+    for depth in range(15, 20):
+        minimaxStart = time.perf_counter()
+        minimax(game, player, depth, -math.inf, math.inf, True)
+        minimaxEnd = time.perf_counter()
+        
+        #firstLayerStart = time.perf_counter()
+        #firstLayerThreading(game, player, depth)
+        #firstLayerEnd = time.perf_counter()
+        print("Depth : " + str(depth))
+        print("Minimax Speed = " + str(minimaxEnd - minimaxStart))
+        #print("First Layer Speed = " + str(firstLayerEnd  - firstLayerStart))
+        print("\n")
+        if minimaxEnd - minimaxStart > 120:
+            break
 
 
 
 game = [0, 4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0]
 player = 0
 
-speedTest(game, player)
+speedTestDepth(game, player)

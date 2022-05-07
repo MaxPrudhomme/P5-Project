@@ -2,7 +2,7 @@ import numpy as np
 import awale as aw
 import awaleMinMax as ai
  
-le_joueur_courant = aw.JOUEUR_1
+le_joueur_courant = aw.JOUEUR_2
 le_jeu = aw.jeu_initialiser()
  
 def demande( jeu, joueur ):
@@ -10,8 +10,9 @@ def demande( jeu, joueur ):
     while True:
         print( "Action Joueur ", joueur, " ? ", end='')
         if joueur == aw.JOUEUR_1:
-            n = ai.master(le_jeu, joueur)
-            print(str(n) + "\n")
+            #n = ai.master(le_jeu, joueur)
+            #print(str(n) + "\n")
+            n = int(input())
         elif joueur == aw.JOUEUR_2:
             n = int(input())
         if aw.joueur_peut_jouer_trou( jeu, joueur, n):
