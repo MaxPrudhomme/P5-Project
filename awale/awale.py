@@ -124,12 +124,12 @@ def joue(jeu, joueur, trou):
         trou = trou_suivant(trou, joueur)
         jeu[trou] += 1
         billes -= 1
-    if jeu[trou] == 1:
-       jeu[7 + modifieur] += jeu[abs(trou - 14)] 
-       jeu[abs(trou - 14)] = 0
+    if jeu[trou] == 1 and trou != 7 and trou != 14:
+        if (joueur == JOUEUR_1 and 0 < trou and trou < 7) or (joueur == JOUEUR_2 and 7 < trou and trou < 14):
+            jeu[7 + modifieur] += jeu[abs(trou - 14)] 
+            jeu[abs(trou - 14)] = 0
     if jeu_est_termine(jeu):
-        jeu_ramasser_billes(jeu)
-        #DONE
+        jeu_ramasser_billes(jeu) #DONE
 
 def jeu_grenier(jeu, joueur):
     if joueur == JOUEUR_1:
