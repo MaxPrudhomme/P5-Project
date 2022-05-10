@@ -68,17 +68,18 @@ def gameContainer(player1, player2):
             print("Match nul")
             result.write("Match Nul " + str(grenier_1) + " à " + str(grenier_2) + "\n")
 
-# AB VS M
-#gameContainer("AB", "M")
-# M VS AB
-#gameContainer("M", "AB")
+if __name__ == '__main__': 
+    # AB VS M
+    #gameContainer("AB", "M")
+    # M VS AB
+    #gameContainer("M", "AB")
 
-# AB VS MP
-gameContainer("AB", "MP")
-# MP VS AB 
-#gameContainer("MP", "AB")
+    # AB VS MP
+    #gameContainer("AB", "MP")
+    # MP VS AB 
+    gameContainer("MP", "AB")
 
-# MP VS M
-#gameContainer("MP", "M")
-# M VS MP
-#gameContainer("M", "MP")
+    # MP VS M
+    gameContainer("MP", "M")
+    # M VS MP
+    gameContainer("M", "MP")
