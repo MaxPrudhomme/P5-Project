@@ -3,7 +3,7 @@ async function loadPlayerStats(userIdentifier)
     document.getElementById("playerSearchContainer").style.height = "40px";
     document.getElementById("playerOutputContainer").style.height = "0px";
 
-    var response = await fetch("json/" + userIdentifier.substring(1) + ".json");
+    var response = await fetch("statsPlatform/json/" + userIdentifier.substring(1) + ".json");
     data = await response.json();
     
     //Player Stats
@@ -36,7 +36,7 @@ async function playerSearcher()
     }
     else
     {
-    const users = await fetch("json/users.json");
+    const users = await fetch("statsPlatform/json/users.json");
     const usersData = await users.json()
     var containerSize = 40;
     var outputContainer = document.getElementById("playerOutputContainer")
