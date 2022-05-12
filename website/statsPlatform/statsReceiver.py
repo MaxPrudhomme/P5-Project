@@ -1,5 +1,5 @@
 import os, sys, json
-
+from datetime import datetime
 
 sys.path.insert(0, os.path.dirname(__file__))
 
@@ -29,7 +29,7 @@ def application(environ, start_response):
     
     print(playerStats)
     
-    
+    date = datetime.today().strftime('%d/%m/%Y')
     
     if draw == "True":
        playerStats[player1]["playerStats"]["draws"] += 1
@@ -54,6 +54,8 @@ def application(environ, start_response):
             playerStats[winner]["gameStats"]["fastest"] = duration
         playerStats[winner]["gameStats"]["average"] = ((playerStats[winner]["gameStats"]["longest"] * (playerStats[winner]["playerStats"]["wins"] + playerStats[winner]["playerStats"]["looses"] - 1) + duration) / playerStats[winner]["playerStats"]["wins"] + playerStats[winner]["playerStats"]["looses"] + 1)
     
+        playerStats[winner]["lastConnection"] = str(date)
+
         #LOOSER STATS
         playerStats[looser]["playerStats"]["looses"] += 1
         playerStats[looser]["playerStats"]["winrate"] = (playerStats[looser]["playerStats"]["wins"] / (playerStats[looser]["playerStats"]["wins"] + playerStats[looser]["playerStats"]["looses"])) * 100
@@ -68,6 +70,8 @@ def application(environ, start_response):
             playerStats[looser]["gameStats"]["fastest"] = duration
         playerStats[looser]["gameStats"]["average"] = ((playerStats[looser]["gameStats"]["longest"] * (playerStats[looser]["playerStats"]["wins"] + playerStats[looser]["playerStats"]["looses"] - 1) + duration) / playerStats[looser]["playerStats"]["wins"] + playerStats[looser]["playerStats"]["looses"] + 1)
     
+        playerStats[looser]["lastConnection"] = str(date)
+
     with open("json/" + player1 + ".json", "w") as player1File:
         json.dump(playerStats[player1], player1File)
     
