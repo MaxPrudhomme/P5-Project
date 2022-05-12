@@ -78,5 +78,3 @@ def application(environ, start_response):
    
 
     return "Will you stop looking into my code ?!"
-
-application("a", "a")
