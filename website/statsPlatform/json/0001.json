@@ -14,7 +14,7 @@
     "fastest": 10.00,
     "longest": 10.00,
     "winstreak": 100,
-    "cWinstreak": 100,
-    "oWinstreak": "True"
+    "cWinstreak": 0,
+    "oWinstreak": "False"
   }
 }
