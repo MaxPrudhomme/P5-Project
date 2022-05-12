@@ -27,8 +27,6 @@ def application(environ, start_response):
         player2Stats = json.load(playerJSON)
         playerStats[player2] = player2Stats
     
-    print(playerStats)
-    
     date = datetime.today().strftime('%d/%m/%Y')
     
     if draw == "True":
@@ -77,8 +75,7 @@ def application(environ, start_response):
     
     with open("json/" + player2 + ".json", "w") as player2File:
         json.dump(playerStats[player2], player2File)
-    
-    print(playerStats)
+   
 
     return "Will you stop looking into my code ?!"
 
