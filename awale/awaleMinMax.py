@@ -1,6 +1,7 @@
 import json, copy, math, time
 import concurrent.futures
 from functools import partial
+import awale as a
 
 #game = [0, 4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0]
 #player = 1
@@ -33,21 +34,20 @@ def nextSpot(spot, player):
     return spot + 1 #DONE
 
 def sim(game, player, spot):
-    #print("----------------")
-    #print(game)
-    #print(player)
-    #print(spot)
+    modifier = 0
+    if player == 7:
+        spot += 7
+        modifier = 7
     marbles = game[spot]
     game[spot] = 0
-    for marble in range(marbles):
-        #print("Marble : " + str(marble))
-        #print("Current Spot : " + str(spot))
+    while marbles> 0:
         spot = nextSpot(spot, player)
-        #print("Next Spot : " + str(spot))
         game[spot] += 1
-    if game[spot] == 1 and 0 + player < spot and spot < 7 + player:
-        game[7 + player] += game[abs(spot - 14)]
-        game[abs(spot - 14)] = 0
+        marbles -= 1
+    if game[spot] == 1 and spot != 7 and spot != 14:
+        if (player == 0 and 0 < spot and spot < 7) or (player == 7 and 7 < spot and spot < 14):
+            game[7 + modifier] += game[abs(spot - 14)] 
+            game[abs(spot - 14)] = 0
     return game #DONE
 
 def state(game):
@@ -72,28 +72,83 @@ def eval(game, player, maximizing):
 def gather(game):
     game[7] += sum(game[1:7])
     game[14] += sum(game[8:14])
-    return game #DONE
+    return game[7], game[14] #DONE
 
 def proc(depth, player, game):
 
-    return multiProcessing(game, swapPlayer(player), depth - 1, False) #DONE
+    return multiProcessing(game, player, depth - 1, True) #DONE
 
 
 #ALGORITHM FUNCTION
+def minimaxTesting(game, player, depth, maximizing, tDepth):
+    if depth == 0 or state(game):
+        #print("Depth 0 game : " + str(game))
+        if state(game):
+            print("End found")
+            results = gather(game)
+            game = [0, 0, 0, 0, 0, 0, 0, results[0], 0, 0, 0, 0, 0, 0, results[1]]
+        return None, eval(game, player, maximizing)
+    if maximizing:
+        moves = getMoves(game, player)
+        if depth >= tDepth:
+            print("Moves : " + str(moves))
+            #print("Current Player : " + str(player))
+        bestMove = moves[0]
+        maxEval = -math.inf
+        if depth == tDepth + 1:
+            print(game)
+        for move in moves:
+            simGame = sim(copy.deepcopy(game), player, move)
+            cEval = minimaxTesting(simGame, swapPlayer(player), depth - 1, False, tDepth)
+            if depth == tDepth:
+                print("Eval : " + str(cEval))
+                #print("Corresponding Game : " + str(sim(copy.deepcopy(game), player, move)))
+            if cEval[1] >= maxEval:
+                maxEval = cEval[1]
+                bestMove = move
+        if depth == tDepth:
+            print("Choice : " + str((bestMove, maxEval)))
+        return bestMove, maxEval
+    else:
+        moves = getMoves(game, player)
+        if depth >= tDepth:
+            print("Moves : " + str(moves))
+        #print("Current Player : " + str(player))
+        bestMove = moves[0]
+        minEval = math.inf
+        if depth == tDepth + 1:
+            print(game)
+        for move in moves:
+            simGame = sim(copy.deepcopy(game), player, move)
+            cEval = minimaxTesting(simGame, swapPlayer(player), depth - 1, True, tDepth)
+            cEval = list(cEval)
+            cEval[1] = -1 * cEval[1]
+            cEval = tuple(cEval)
+            if depth == tDepth:
+                print("Eval : " + str(cEval))
+                #print("Corresponding Game : " + str(sim(copy.deepcopy(game), player, move)))
+            if cEval[1] <= minEval:
+                minEval = cEval[1]
+                bestMove = move
+        if depth == tDepth:
+            print("Choice : " + str((bestMove, minEval)))
+        return bestMove, -1 * minEval #DONE
+
 def minimax(game, player, depth, maximizing):
     if depth == 0 or state(game):
         if state(game):
-            return None, eval(gather(game), player, maximizing)
+            results = gather(game)
+            game = [0, 0, 0, 0, 0, 0, 0, results[0], 0, 0, 0, 0, 0, 0, results[1]]
         return None, eval(game, player, maximizing)
     if maximizing:
         moves = getMoves(game, player)
         bestMove = moves[0]
         maxEval = -math.inf
         for move in moves:
-            simGame = sim(copy.deepcopy(game), player, move)
-            cEval = minimax(simGame, swapPlayer(player), depth - 1, False)
-            if cEval[1] >= maxEval:
-                maxEval = cEval[1]
+            simGame = sim(copy.copy(game), player, move)
+            cMove, cEval  = minimax(simGame, swapPlayer(player), depth - 1, False)
+            if cEval > maxEval:
+                maxEval = cEval
                 bestMove = move
         return bestMove, maxEval
     else:
@@ -101,29 +156,30 @@ def minimax(game, player, depth, maximizing):
         bestMove = moves[0]
         minEval = math.inf
         for move in moves:
-            simGame = sim(copy.deepcopy(game), player, move)
-            cEval = minimax(simGame, swapPlayer(player), depth - 1, True)
-            if cEval[1] <= minEval:
-                minEval = cEval[1]
+            simGame = sim(copy.copy(game), player, move)
+            cMove, cEval = minimax(simGame, swapPlayer(player), depth - 1, True)
+            if cEval < minEval:
+                minEval = cEval
                 bestMove = move
         return bestMove, minEval #DONE
 
 def alphaBeta(game, player, depth, maximizing, alpha, beta):
     if depth == 0 or state(game):
         if state(game):
-            return None, eval(gather(game), player, maximizing)
+            results = gather(game)
+            game = [0, 0, 0, 0, 0, 0, 0, results[0], 0, 0, 0, 0, 0, 0, results[1]]
         return None, eval(game, player, maximizing)
     if maximizing:
         moves = getMoves(game, player)
         bestMove = moves[0]
         maxEval = -math.inf
         for move in moves:
-            simGame = sim(copy.deepcopy(game), player, move)
-            cEval = alphaBeta(simGame, swapPlayer(player), depth - 1, False, alpha, beta)
-            if cEval[1] >= maxEval:
-                maxEval = cEval[1]
+            simGame = sim(copy.copy(game), player, move)
+            cMove, cEval  = alphaBeta(simGame, swapPlayer(player), depth - 1, False, alpha, beta)
+            if cEval > maxEval:
+                maxEval = cEval
                 bestMove = move
-            alpha = max(alpha, cEval[1])
+            alpha = max(alpha, cEval)
             if beta <= alpha:
                 break
         return bestMove, maxEval
@@ -132,12 +188,12 @@ def alphaBeta(game, player, depth, maximizing, alpha, beta):
         bestMove = moves[0]
         minEval = math.inf
         for move in moves:
-            simGame = sim(copy.deepcopy(game), player, move)
-            cEval = alphaBeta(simGame, swapPlayer(player), depth - 1, True, alpha, beta)
-            if cEval[1] <= minEval:
-                minEval = cEval[1]
+            simGame = sim(copy.copy(game), player, move)
+            cMove, cEval = alphaBeta(simGame, swapPlayer(player), depth - 1, True, alpha, beta)
+            if cEval < minEval:
+                minEval = cEval
                 bestMove = move
-            beta = min(beta, cEval[1])
+            beta = min(beta, cEval)
             if beta <= alpha:
                 break
         return bestMove, minEval #DONE
@@ -145,16 +201,17 @@ def alphaBeta(game, player, depth, maximizing, alpha, beta):
 def multiProcessing(game, player, depth, maximizing):
     if depth == 0 or state(game):
         if state(game):
-            return None, eval(gather(game), player, maximizing)
+            results = gather(game)
+            game = [0, 0, 0, 0, 0, 0, 0, results[0], 0, 0, 0, 0, 0, 0, results[1]]
         return None, eval(game, player, maximizing)
     if maximizing:
         moves = getMoves(game, player)
         bestMove = moves[0]
         maxEval = -math.inf
         for move in moves:
-            simGame = sim(copy.deepcopy(game), player, move)
-            cEval = minimax(simGame, swapPlayer(player), depth - 1, False)
-            if cEval[1] >= maxEval:
+            simGame = sim(copy.copy(game), player, move)
+            cEval  = minimax(simGame, swapPlayer(player), depth - 1, False)
+            if cEval[1] > maxEval:
                 maxEval = cEval[1]
                 bestMove = move
         return bestMove, maxEval
@@ -163,62 +220,146 @@ def multiProcessing(game, player, depth, maximizing):
         bestMove = moves[0]
         minEval = math.inf
         for move in moves:
-            simGame = sim(copy.deepcopy(game), player, move)
+            simGame = sim(copy.copy(game), player, move)
             cEval = minimax(simGame, swapPlayer(player), depth - 1, True)
-            if cEval[1] <= minEval:
+            if cEval[1] < minEval:
                 minEval = cEval[1]
                 bestMove = move
         return bestMove, minEval #DONE
 
+def multiLayerFirst(game, player, depth):
+    moves = getMoves(game, player)
+    firstLayerResults = []
+    for move in moves:
+        firstLayerResults.append(multiLayerSecond(sim(copy.deepcopy(game), player, move), player, depth - 1))
+    bestMove = moves[0]
+    maxEval = -math.inf
+    for result in firstLayerResults:
+        if result[1] > maxEval:
+            maxEval = result[1]
+            bestMove = move
+    return bestMove, maxEval
 
-#MASTER FUNCTION
-def masterM(game, player, depth):
-    player = converter(player)
-    return minimax(game, player, depth, True)[0] #DONE
-
-def masterAB(game, player):
-    player = converter(player)
-    return alphaBeta(game, player, 12, True, -math.inf, math.inf)[0] #DONE
-
-def masterMP(game, player, depth): 
-    player = converter(player)
+def multiLayerSecond(game, player, depth):
+    moves = getMoves(game, player)
+    secondLayerMap = []
+    for move in moves:
+        secondLayerMap.append(sim(copy.deepcopy(game), player, move))
     with concurrent.futures.ProcessPoolExecutor() as executor:
-        moves = getMoves(game, player)
+        partialSLP = partial(proc, depth, player)
+        results = executor.map(partialSLP, secondLayerMap)
+        secondLayerResults = []
+        for result in results:
+            secondLayerResults.append(result)
+        bestMove = moves[0]
+        minEval = math.inf
+        for result in secondLayerResults:
+            if result[1] < minEval:
+                minEval = result[1]
+                bestMove = move
+        return bestMove, minEval
+
+def firstLayerMinimax(game, player, depth):
+    moves = getMoves(game, player)
+    with concurrent.futures.ProcessPoolExecutor() as executor:
         firstLayerMap = []
         for move in moves:
-            firstLayerMap.append(sim(copy.deepcopy(game), player, move))
+            firstLayerMap.append(sim(copy.copy(game), player, move))
         partialFLP = partial(proc, depth, player)
         results = executor.map(partialFLP, firstLayerMap)
         firstLayerResults = []
         for result in results:
             firstLayerResults.append(result)
-        bestMove = firstLayerResults[0][0]
-        maxEval = firstLayerResults[0][1]
+        bestMove = moves[0]
+        maxEval = -math.inf
         for result in firstLayerResults:
             if result[1] > maxEval:
                 maxEval = result[1]
-                bestMove = result[0]
-        return bestMove
+                bestMove = firstLayerResults.index(result) + 1
+        return bestMove, maxEval
+
+def firstLayerAlphaBeta(game, player, depth):
+    moves = getMoves(game, player)
+    firstLayerResults = []
+    with concurrent.futures.ProcessPoolExecutor() as executor:
+        for move in moves:
+            firstLayerResults.append(alphaBeta(sim(copy.deepcopy(game), player, move), swapPlayer(player), depth - 1, False, -math.inf, math.inf))
+        bestMove = moves[0]
+        maxEval = -math.inf
+        for result in firstLayerResults:
+            if result[1] >= maxEval:
+                maxEval = result[1]
+                bestMove = move
+    return bestMove, maxEval
+
+
+#MASTER FUNCTION
+def masterM(game, player):
+    player = converter(player)
+    return minimax(game, player, 8, True)[0] #DONE
+
+def masterAB(game, player):
+    player = converter(player)
+    return alphaBeta(game, player, 10, True, -math.inf, math.inf)[0] #DONE
+
+def masterMP(game, player): 
+    player = converter(player)
+    return firstLayer(game, player, 13)[0]
 
 
 #TEST FUNCTION
-def soloTest(game, player):
-    start = time.perf_counter()
-    print(minimax(game, player, 10, True, 0))
-    end = time.perf_counter()
-    print(end - start)
+def soloTest():
+    player = 0
+    game = [0, 1, 0, 4, 3, 2, 1, 0, 0, 0, 0, 0, 8, 2, 0]
+    a.jeu_afficher(game)
+    a.jeu_afficher(sim(game, player, minimaxTesting(game, player, 5, True, 5)[0]))
 
 def soloSpeedTest():
     game = [0, 4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0]
-    player = 1 
-    for depth in range(1, 40):
+    player = 0
+    for depth in range(3, 40):
         print("Depth : " + str(depth))
         start = time.perf_counter()
-        print(masterM(game, player, depth))
+        print(firstLayerMinimax(game, player, depth))
         end = time.perf_counter()
         print("Timer : " + str(end - start))
         if end - start > 120:
             break
+
+def similarityTest(game):
+    player = 1
+    while not state(game):
+        foeValue = foe.ia(game, 1)
+        aiValue = minimax(game, converter(player), 8, True)
+        print("Foe : " + str(foeValue) + " & AI : " + str(aiValue))
+        game = sim(game, converter(player), aiValue[0])
+        print(game)
+        player = swapPlayer(player)
+
+def simOld(game, player, spot):
+    marbles = game[spot]
+    game[player + spot] = 0
+    for marble in range(marbles):
+        spot = nextSpot(spot, player)
+        game[spot] += 1
+    if game[spot] == 1 and 0 + player < spot and spot < 7 + player:
+        game[7 + player] += game[abs(spot - 14)]
+        game[abs(spot - 14)] = 0
+    return game #DONE
+
+def manualSim(game, player):
+    if state(game):
+        print("End Found")
+        results = gather(game)
+        game = [0, 0, 0, 0, 0, 0, 0, results[0], 0, 0, 0, 0, 0, 0, results[1]]
+        print(game)
+        print("Final Score : " + str(game[7]) + " to " + str(game[14]))
+    else:
+        print("Player : " + str(player))
+        move = int(input())
+        game = sim(game, player, move)
+        a.jeu_afficher(game)
+        manualSim(game, swapPlayer(player))
 
 if __name__ == '__main__':
     soloSpeedTest()
