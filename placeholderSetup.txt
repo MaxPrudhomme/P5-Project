@@ -1,1 +1,12 @@
 https://www.youtube.com/watch?v=dQw4w9WgXcQ
+
+    with open("json/activeGame.json", "r") as activeGameFile:
+        activeGameData = activeGameFile.read()    
+    
+    if activeGameData == "{}":
+        if time.perf_counter() - activeGameData["lastInteraction"] > 300:
+            activeGameData = {}
+    activeGameData = update(activeGameData, payload)
+
+    with open("json/activeGame.json", "w") as activeGameFile:
+        json.dump(activeGameData, activeGameFile)
