@@ -3,6 +3,12 @@ JOUEUR_2 = 2
 
 
 def jeu_afficher(jeu):
+    print("\n")
+    print("\n")
+    print("\n")
+    print("\n")
+    print("\n")
+    print("\n")
     display = ["               Joueur  1               ", "      6    5    4    3    2    1       ", "     ---- ---- ---- ---- ---- ----     ", "", "---- ---- ---- ---- ---- ---- ---- ----", "", "---- ---- ---- ---- ---- ---- ---- ----", "    ", "     ---- ---- ---- ---- ---- ----     ", "      1    2    3    4    5    6       ", "               Joueur  2               "]
 
     cLine = ""
@@ -49,12 +55,14 @@ def jeu_afficher(jeu):
     print("\n") #DONE
 
 def jeu_initialiser():
-    #jeu = [0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 0]
-    jeu = [0, 4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0]
-    return jeu #DONE
+    #jeu = [0, 0, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0]
+    #jeu = [0, 4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0]
+    #jeu = [0, 5, 1, 6, 5, 5, 5, 0, 4, 4, 4, 4, 4, 0, 1]
+    #jeu = [0, 0, 8, 0, 0, 2, 10, 3, 7, 7, 4, 0, 0, 0, 7]
+    return [0, 4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0] #DONE
 
 def adversaire(joueur): #DONE
-    if joueur == 1:
+    if joueur == JOUEUR_1:
         return JOUEUR_2
     return JOUEUR_1 #DONE
  
@@ -91,7 +99,7 @@ def jeu_ramasser_billes(jeu):
         for trou in range(1, 7):
             sac += jeu[trou + modifieur]
             jeu[trou + modifieur] = 0
-        jeu[7 + modifieur] = sac #DONE
+        jeu[7 + modifieur] += sac #DONE
 
 def joueur_peut_jouer(jeu, joueur):
     modifieur = 0
@@ -108,14 +116,22 @@ def joueur_peut_jouer_trou(jeu, joueur, trou):
     return False #DONE
    
 def joue(jeu, joueur, trou):
+    modifieur = 0
     if joueur == JOUEUR_2:
         trou += 7
+        modifieur = 7
     billes = jeu[trou]
     jeu[trou] = 0
     while billes > 0:
         trou = trou_suivant(trou, joueur)
         jeu[trou] += 1
-        billes -= 1 #DONE 
+        billes -= 1
+    if jeu[trou] == 1 and trou != 7 and trou != 14:
+        if (joueur == JOUEUR_1 and 0 < trou and trou < 7) or (joueur == JOUEUR_2 and 7 < trou and trou < 14):
+            jeu[7 + modifieur] += jeu[abs(trou - 14)] 
+            jeu[abs(trou - 14)] = 0
+    if jeu_est_termine(jeu):
+        jeu_ramasser_billes(jeu) #DONE
 
 def jeu_grenier(jeu, joueur):
     if joueur == JOUEUR_1:
