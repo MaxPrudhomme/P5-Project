@@ -1,4 +1,6 @@
-import copy, math, time
+import copy, math, time, threading
+from inspect import Parameter
+from posixpath import abspath
 from requests import ConnectionError, Timeout, TooManyRedirects, Session
 
 #REQUIRED FUNCTIONS
@@ -69,13 +71,20 @@ def gather(game):
     return game[7], game[14] #DONE
 
 def sendTelemetry(game, player, move, duration):
-    url = "project.maxprudhomme.com/telemetryPlatform"
-    parameters = [sim(game, player, move), player, move, duration]
+    url = "https://project.maxprudhomme.com/telemetryPlatform"
+    parameters = {}
+    for spot in range(15):
+        parameters[spot] = game[spot]
+    parameters["player"] = player
+    parameters["move"] = move
+    parameters["duration"] = duration
     session = Session()
+    print(parameters)
     try:
         response = session.get(url, params=parameters)
+        return "Sent with success"
     except (ConnectionError, Timeout, TooManyRedirects):
-        pass #DONE
+        return "An error as occured" #DONE
 
 #ALGORITHM FUNCTIONS
 
@@ -145,20 +154,12 @@ def alphaBeta(game, player, depth, maximizing, alpha, beta):
 
 #MASTER FUNCTIONS
 
-def masterM(game, player):
-    player = converter(player)
-    duration = time.perf_counter()
-    move = minmax(game, player, 8, True)[0]
-    duration = time.perf_counter() - duration
-    time.sleep(1)
-    sendTelemetry(game, player, move, duration)
-    return move #DONE
-
 def ia2(game, player):
     player = converter(player)
     duration = time.perf_counter()
-    move = alphaBeta(game, player, 13, True, -math.inf, math.inf)[0]
+    move = alphaBeta(copy.deepcopy(game), player, 10, True, -math.inf, math.inf)[0]
     duration = time.perf_counter() - duration
-    time.sleep(1)
-    sendTelemetry(game, player, move, duration)
-    return move #DONE
+
+    confirmation = sendTelemetry(copy.deepcopy(game), player, move, duration)
+    time.sleep(2)
+    return move
