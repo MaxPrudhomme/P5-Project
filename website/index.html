@@ -13,6 +13,7 @@
     <link href="css/documentationSection.css" rel="stylesheet">
     <link href="css/teamSection.css" rel="stylesheet">
     <link href="css/statsSection.css" rel="stylesheet">
+    <link href="css/telemetrySection.css" rel="stylesheet">
     <!-- JQUERY Files -->
     <script type="text/javascript" src="js/jquery(dev).js"></script>
     <script type="text/javascript" src="js/jqueryMigrate(dev).js"></script>
@@ -20,6 +21,7 @@
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript" src="js/menu.js"></script>
     <script type="text/javascript" src="js/stats.js"></script>
+    <script type="text/javascript" src="js/telemetry.js"></script>
 </head>
 
 <body>
@@ -29,12 +31,12 @@
                 viewbox="0 0 100 100"></a>
 
         <div id="mainMenu">
-            <div class="sectionMenu" section="projectSection" onclick="displaySection(this)"><span>Project</span></div>
-            <div class="sectionMenu" section="technicalOverviewSection" onclick="displaySection(this)">Technical Overview</div>
-            <div class="sectionMenu" section="documentationSection" onclick="displaySection(this)">Documentation</div>
-            <div class="sectionMenu" section="teamSection" onclick="displaySection(this)">Our Team</div>
-            <div class="sectionMenu" section="statsSection" onclick="displaySection(this)">Stats</div>
-            <div class="sectionMenu" section="telemetrySection" onclick="displaySection(this)">Telemtry</div>
+            <div class="sectionMenu" section="projectSection" onclick="displaySection(this), stopUpdate()"><span>Project</span></div>
+            <div class="sectionMenu" section="technicalOverviewSection" onclick="displaySection(this), stopUpdate()">Technical Overview</div>
+            <div class="sectionMenu" section="documentationSection" onclick="displaySection(this), stopUpdate()">Documentation</div>
+            <div class="sectionMenu" section="teamSection" onclick="displaySection(this), stopUpdate()">Our Team</div>
+            <div class="sectionMenu" section="statsSection" onclick="displaySection(this), stopUpdate()">Stats</div>
+            <div class="sectionMenu" section="telemetrySection" onclick="displaySection(this), startUpdate()">Telemetry</div>
         </div>
     </div>
     <!-- Content -->
@@ -495,6 +497,39 @@
         <!-- Telemtry Section -->
         <div class="section" id="telemetrySection">
             <h1 class="sectionTitle">Live Telemetry</h1>
+            <div id="gameInfoContainer">
+                <div id="gameContainer">
+                    <div id="player1">Player #</div>
+                    <div id="topRow">
+                        <div class="gameSpot" id="6">#</div>
+                        <div class="gameSpot" id="5">#</div>
+                        <div class="gameSpot" id="4">#</div>
+                        <div class="gameSpot" id="3">#</div>
+                        <div class="gameSpot" id="2">#</div>
+                        <div class="gameSpot" id="1">#</div>
+                    </div>
+                    <div id="midRow">
+                        <div class="gameSpot" id="7">#</div>
+                        <div class="gameSpot" id="14">#</div>
+                    </div>
+                    <div id="botRow">
+                        <div class="gameSpot" id="8">#</div>
+                        <div class="gameSpot" id="9">#</div>
+                        <div class="gameSpot" id="10">#</div>
+                        <div class="gameSpot" id="11">#</div>
+                        <div class="gameSpot" id="12">#</div>
+                        <div class="gameSpot" id="13">#</div>
+                    </div>
+                    <div id="player2">Player #</div>
+                </div>
+                <div id="infoContainer">
+                    <div id="status">Not playing</div>
+                    <div id="turnInfo">
+                        <div id="move">Last move : #</div>
+                        <div id="duration">Turn duration: #</div>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- Footer -->
         <div id="footer">
