@@ -70,7 +70,7 @@ def gather(game):
 
 def sendTelemetry(game, player, move, duration):
     url = "project.maxprudhomme.com/telemetryPlatform"
-    parameters = [game, player, move, duration]
+    parameters = [sim(game, player, move), player, move, duration]
     session = Session()
     try:
         response = session.get(url, params=parameters)
