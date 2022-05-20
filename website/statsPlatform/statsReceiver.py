@@ -5,77 +5,72 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 
 def application(environ, start_response):
-    start_response('200 OK', [('Content-Type', 'text/plain')])
-    payload = str(environ.get('QUERY_STRING'))
-    payload = payload.split('&')
-    
-    player1 = int(str(payload[0]).replace("player1=", ""))
-    player2 = int(str(payload[1]).replace("player2=", ""))
-    winner = int(str(payload[2]).replace("winner=", ""))
-    looser = int(str(payload[3]).replace("looser=", ""))
-    draw = int(str(payload[4].replace("draw=","")))
-    duration = round(float(payload[4].replace("duration=", ""))) / 60
-    
-    payload = [player1, player2, winner, looser, draw, duration]
-    
-    playerStats = {}
-    
-    with open("json/" + player1 + ".json", "r") as playerJSON:
-        player1Stats = json.load(playerJSON)
-        playerStats[player1] = player1Stats
-    
-    with open("json/" + player2 + ".json", "r") as playerJSON:
-        player2Stats = json.load(playerJSON)
-        playerStats[player2] = player2Stats
-    
-    date = datetime.today().strftime('%d/%m/%Y')
-    
-    if draw == "True":
-       playerStats[player1]["playerStats"]["draws"] += 1
-       playerStats[player2]["playerStats"]["draws"] += 1
-    
-    else:
+	start_response('200 OK', [('Content-Type', 'text/plain')])
+	payload = str(environ.get('QUERY_STRING'))
+	payload = payload.split('&')
+
+	if len(str(payload[0])) == 1:
+		winnerID = str(payload[0]).replace("winner=", "000")
+	else:
+		winnerID = str(payload[0]).replace("winner=", "")
+	if len(str(payload[1])) == 1:
+		looserID = str(payload[1]).replace("looser=", "000")
+	else:
+		looserID = str(payload[1]).replace("looser=", "")
+	
+	draw = str(payload[2])
+	duration = int(str(payload[3]))
+
+	payload = [winnerID, looserID, draw, duration]
+
+	playerStats = {}
+
+	with open("json/" + winnerID + ".json", "r") as winnerFile:
+		winner = json.load(winnerFile)
+
+	with open("json/" + looserID + ".json", "r") as looserFile:
+		looser = json.load(looserFile)
+
+	date = datetime.today().strftime('%d/%m/%Y')
+
+	if draw == "True":
+		winner["playerStats"]["draws"] += 1
+		looser["playerStats"]["draws"] += 1
+
+	else:
         #WINNER STATS
-        playerStats[winner]["playerStats"]["wins"] += 1
-        playerStats[winner]["playerStats"]["winrate"] = (playerStats[winner]["playerStats"]["wins"] / (playerStats[winner]["playerStats"]["wins"] + playerStats[winner]["playerStats"]["looses"])) * 100
-        #WINSTREAK STATS
-        if playerStats[winner]["gameStats"]["oWinstreak"] == "True":
-            playerStats[winner]["gameStats"]["cWinstreak"] += 1
-        else:
-            playerStats[winner]["gameStats"]["oWinstreak"] = "True"
-            playerStats[winner]["gameStats"]["cWinstreak"] += 1
-        if playerStats[winner]["gameStats"]["cWinstreak"] > playerStats[winner]["gameStats"]["winstreak"]:
-            playerStats[winner]["gameStats"]["winstreak"] = playerStats[winner]["gameStats"]["cWinstreak"]
-        #DURATION STATS
-        if playerStats[winner]["gameStats"]["longest"] < duration: 
-            playerStats[winner]["gameStats"]["longest"] = duration
-        elif playerStats[winner]["gameStats"]["fastest"] > duration: 
-            playerStats[winner]["gameStats"]["fastest"] = duration
-        playerStats[winner]["gameStats"]["average"] = ((playerStats[winner]["gameStats"]["longest"] * (playerStats[winner]["playerStats"]["wins"] + playerStats[winner]["playerStats"]["looses"] - 1) + duration) / playerStats[winner]["playerStats"]["wins"] + playerStats[winner]["playerStats"]["looses"] + 1)
-    
-        playerStats[winner]["lastConnection"] = str(date)
-
+		winner["playerStats"]["wins"] += 1
+		winner["playerStats"]["winrate"] = (winner["playerStats"]["wins"] / (winner["playerStats"]["wins"] + winner["playerStats"]["looses"])) * 100
+		if winner["gameStats"]["oWinstreak"] == "True":
+			winner["gameStats"]["cWinstreak"] += 1
+		else:
+			winner["gameStats"]["oWinstreak"] = "True"
+			winner["gameStats"]["cWinstreak"] += 1
+		if winner["gameStats"]["cWinstreak"] > winner["gameStats"]["winstreak"]:
+			winner["gameStats"]["winstreak"] = winner["gameStats"]["cWinstreak"]
         #LOOSER STATS
-        playerStats[looser]["playerStats"]["looses"] += 1
-        playerStats[looser]["playerStats"]["winrate"] = (playerStats[looser]["playerStats"]["wins"] / (playerStats[looser]["playerStats"]["wins"] + playerStats[looser]["playerStats"]["looses"])) * 100
-        #WINSTREAK STATS
-        if playerStats[looser]["gameStats"]["oWinstreak"] == "True":
-            playerStats[looser]["gameStats"]["oWinstreak"] = "False"
-            playerStats[looser]["gameStats"]["cWinstreak"] = 0
-        #DURATION STATS
-        if playerStats[looser]["gameStats"]["longest"] < duration: 
-            playerStats[looser]["gameStats"]["longest"] = duration
-        elif playerStats[looser]["gameStats"]["fastest"] > duration: 
-            playerStats[looser]["gameStats"]["fastest"] = duration
-        playerStats[looser]["gameStats"]["average"] = ((playerStats[looser]["gameStats"]["longest"] * (playerStats[looser]["playerStats"]["wins"] + playerStats[looser]["playerStats"]["looses"] - 1) + duration) / playerStats[looser]["playerStats"]["wins"] + playerStats[looser]["playerStats"]["looses"] + 1)
-    
-        playerStats[looser]["lastConnection"] = str(date)
+		looser["playerStats"]["looses"] += 1
+		looser["playerStats"]["winrate"] = (looser["playerStats"]["wins"] / (looser["playerStats"]["wins"] + looser["playerStats"]["looses"])) * 100
+		if looser["gameStats"]["oWinstreak"] == "True":
+			looser["gameStats"]["oWinstreak"] = "False"
+			looser["gameStats"]["cWinstreak"] = 0
+       	#DURATION STATS
+		if winner["gameStats"]["longest"] < duration:
+			winner["gameStats"]["longest"] = duration
+		elif winner["gameStats"]["fastest"] > duration:
+			winner["gameStats"]["fastest"] = duration
+		if looser["gameStats"]["longest"] < duration:
+			looser["gameStats"]["longest"] = duration
+		elif looser["gameStats"]["fastest"] > duration:
+			looser["gameStats"]["fastest"] = duration
 
-    with open("json/" + player1 + ".json", "w") as player1File:
-        json.dump(playerStats[player1], player1File)
-    
-    with open("json/" + player2 + ".json", "w") as player2File:
-        json.dump(playerStats[player2], player2File)
-   
+		winner["gameStats"]["average"] = (winner["gameStats"]["average"] * (winner["playerStats"]["wins"] + winner["playerStats"]["looses"] - 1) + duration ) / (winner["playerStats"]["wins"] + winner["playerStats"]["looses"])
+		looser["gameStats"]["average"] = (looser["gameStats"]["average"] * (looser["playerStats"]["wins"] + looser["playerStats"]["looses"] - 1) + duration ) / (looser["playerStats"]["wins"] + looser["playerStats"]["looses"])
 
-    return "Will you stop looking into my code ?!"
+	with open("json/" + winnerID + ".json", "w") as winnerFile:
+		json.dump(winner, winnerFile)
+		
+	with open("json/" + looserID + ".json", "w") as looserFile:
+		json.dump(looser, looserFile)
+
+	return "Will you stop looking into my code ?!"

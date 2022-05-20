@@ -29,7 +29,6 @@ async function playerSearcher()
     $.each($('#playerField').serializeArray(), function() {
         userIdentifier = this.value
     });
-
     if (userIdentifier.charAt(0) == "#")
     {
         loadPlayerStats(userIdentifier);
