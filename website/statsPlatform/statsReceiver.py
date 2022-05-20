@@ -5,17 +5,18 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 
 def application(environ, start_response):
-    payload = environ.get("QUERY_STRING")
-    payload = payload.replace("%23", "")
-    gameStats = payload.split("&")
+    start_response('200 OK', [('Content-Type', 'text/plain')])
+    payload = str(environ.get('QUERY_STRING'))
+    payload = payload.split('&')
     
-    player1 = gameStats[0].replace("player1=", "")
-    player2 = gameStats[1].replace("player2=", "")
-    winner = gameStats[2].replace("winner=", "")
-    looser = gameStats[3].replace("looser=", "")
-    draw = gameStats[4].replace("draw=", "")
-    duration = gameStats[5].replace("duration=", "")
-    duration = int(duration) / 60
+    player1 = int(str(payload[0]).replace("player1=", ""))
+    player2 = int(str(payload[1]).replace("player2=", ""))
+    winner = int(str(payload[2]).replace("winner=", ""))
+    looser = int(str(payload[3]).replace("looser=", ""))
+    draw = int(str(payload[4].replace("draw=","")))
+    duration = round(float(payload[4].replace("duration=", ""))) / 60
+    
+    payload = [player1, player2, winner, looser, draw, duration]
     
     playerStats = {}
     

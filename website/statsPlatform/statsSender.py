@@ -1,9 +1,8 @@
-import json
 from requests import ConnectionError, Timeout, TooManyRedirects
 
-def sendTelemetry(game, player, move, duration):
+def statsSender(player1, player2, winner, looser, draw, duration):
     url = "project.maxprudhomme.com/telemetryPlatform"
-    parameters = [game, player, move, duration]
+    parameters = [player1, player2, winner, looser, draw, duration]
     session = Session()
     try:
         response = session.get(url, params=parameters)

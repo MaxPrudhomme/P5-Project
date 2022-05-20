@@ -1,1 +1,1 @@
-{}
+{"player1": "AI", "player2": "FOE", "lastInteraction": 1653004234.8834338, "currentState": {"game": [0, 4, 4, 4, 4, 6, 4, 0, 4, 4, 4, 4, 4, 4, 0], "move": 1, "duration": 14}, "gameHistory": {"1": {"game": [0, 4, 4, 4, 4, 6, 4, 0, 4, 4, 4, 4, 4, 4, 0], "move": 1, "duration": 14}}}
