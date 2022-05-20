@@ -1,7 +1,8 @@
-import json, copy, math, time
+import copy, math, time
 import concurrent.futures
 from functools import partial
 import awale as a
+from requests import ConnectionError, Timeout, TooManyRedirects, Session
 
 #game = [0, 4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0]
 #player = 1
@@ -78,6 +79,14 @@ def proc(depth, player, game):
 
     return multiProcessing(game, player, depth - 1, True) #DONE
 
+def sendTelemetry(game, player, move, duration):
+    url = "project.maxprudhomme.com/telemetryPlatform"
+    parameters = [game, player, move, duration]
+    session = Session()
+    try:
+        response = session.get(url, params=parameters)
+    except (ConnectionError, Timeout, TooManyRedirects):
+        pass
 
 #ALGORITHM FUNCTION
 def minimaxTesting(game, player, depth, maximizing, tDepth):
