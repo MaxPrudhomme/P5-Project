@@ -36,7 +36,7 @@
     border-bottom-left-radius: 4px;
 }
 
-#submitButton
+#newsletterSubmitButton
 {
     width: 39px;
     height: 40px;
@@ -67,7 +67,7 @@ input:focus
     filter: invert(69%) sepia(50%) saturate(184%) hue-rotate(240deg) brightness(105%) contrast(89%);
 }
 
-.footerText
+.inputText
 {
     color: lightgray;
     text-align: center;

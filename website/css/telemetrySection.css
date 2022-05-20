@@ -1,0 +1,95 @@
+#telemetrySection
+{
+    width: 95%;
+    margin: auto;
+    background-color: rgb(41, 37, 43);
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+#gameContainer
+{
+    width: 45%;
+    height: 10%;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 2px solid black;
+    background-color: rgb(43, 43, 43);
+    margin-left: 20px;
+}
+
+#topRow, #midRow, #botRow
+{
+    display: flex;
+}
+
+#topRow, #botRow
+{
+    justify-content: space-evenly;
+    width: 95%;
+    margin: auto;
+}
+
+#midRow
+{
+    justify-content: space-between;
+}
+
+.gameSpot
+{
+    border: 2px solid rgb(204, 204, 204);
+    background-color: rgb(82, 82, 82);
+    height: 50px;
+    width: 50px;
+    text-align: center;
+    line-height: 175%;
+    font-size: 30px;
+}
+
+#infoContainer
+{
+    width: 45%;
+    margin-right: 20px;
+}
+
+#gameInfoContainer, #turnInfo
+{
+    display: flex;
+    justify-content: space-between;
+}
+
+#status
+{
+    border: 2px solid red;
+    border-radius: 5px;
+    background-color: rgb(190, 19, 19);
+    width: 125px;
+    font-size: 20px;
+    text-align: center;
+    margin: auto;
+    margin-top: 20px;
+}
+
+#turnInfo
+{
+    width: 375px;
+    margin: auto;
+    margin-top: 50px;
+}
+
+#move, #duration
+{
+    border: 2px solid rgb(204, 204, 204);
+    background-color: rgb(82, 82, 82);
+    border-radius: 5px;
+    width: 175px;
+    font-size: 18px;
+    text-align: center;    
+}
+
+#player1, #player2
+{
+    text-align: center;
+    margin: 20px;
+    font-size: 20px;
+}

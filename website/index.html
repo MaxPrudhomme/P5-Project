@@ -12,12 +12,16 @@
     <link href="css/technicalOverviewSection.css" rel="stylesheet">
     <link href="css/documentationSection.css" rel="stylesheet">
     <link href="css/teamSection.css" rel="stylesheet">
+    <link href="css/statsSection.css" rel="stylesheet">
+    <link href="css/telemetrySection.css" rel="stylesheet">
     <!-- JQUERY Files -->
     <script type="text/javascript" src="js/jquery(dev).js"></script>
     <script type="text/javascript" src="js/jqueryMigrate(dev).js"></script>
     <!-- JS Files -->
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript" src="js/menu.js"></script>
+    <script type="text/javascript" src="js/stats.js"></script>
+    <script type="text/javascript" src="js/telemetry.js"></script>
 </head>
 
 <body>
@@ -27,11 +31,12 @@
                 viewbox="0 0 100 100"></a>
 
         <div id="mainMenu">
-            <div class="sectionMenu" section="projectSection" onclick="displaySection(this)"><span>Project</span></div>
-            <div class="sectionMenu" section="technicalOverviewSection" onclick="displaySection(this)">Technical
-                Overview</div>
-            <div class="sectionMenu" section="documentationSection" onclick="displaySection(this)">Documentation</div>
-            <div class="sectionMenu" section="teamSection" onclick="displaySection(this)">Our Team</div>
+            <div class="sectionMenu" section="projectSection" onclick="displaySection(this), stopUpdate()"><span>Project</span></div>
+            <div class="sectionMenu" section="technicalOverviewSection" onclick="displaySection(this), stopUpdate()">Technical Overview</div>
+            <div class="sectionMenu" section="documentationSection" onclick="displaySection(this), stopUpdate()">Documentation</div>
+            <div class="sectionMenu" section="teamSection" onclick="displaySection(this), stopUpdate()">Our Team</div>
+            <div class="sectionMenu" section="statsSection" onclick="displaySection(this), stopUpdate()">Stats</div>
+            <div class="sectionMenu" section="telemetrySection" onclick="displaySection(this), startUpdate()">Telemetry</div>
         </div>
     </div>
     <!-- Content -->
@@ -373,16 +378,169 @@
                 </div>
             </div>
         </div>
+        <!-- Stats Section -->
+        <div class="section" id="statsSection">
+            <h1 class="sectionTitle">Player Stats</h1>
+            <!-- Player Input Field -->
+            <div id="playerSearchContainer">
+                <div id="playerInputContainer">
+                    <input type="text" name="player" id="playerField" placeholder="Player Name / Player ID">
+                    <button id="playerSubmit" onclick="playerSearcher()">
+                        <img src="misc/arrow-right.svg" viewbox="0 0 100 100" id="submitArrow">
+                    </button>
+                </div>
+                <div id="playerOutputContainer"></div>
+            </div>
+            <!-- Stats Container -->
+            <div id="statsContainer">
+                <!-- Player Info Left -->
+                <div id="playerInfoLeft">
+                    <div class="userInfo">
+                        <div class="infoCategory">
+                            <img src="misc/stats/person.svg" class="infoLogo">
+                            <h3 id="infoName">Username</h3>
+                        </div>
+                        <h5 class="info" id="username">###</h5>
+                    </div>
+                    <div class="userInfo">
+                        <div class="infoCategory">
+                            <img src="misc/stats/fingerprint.svg" class="infoLogo">
+                            <h3 id="infoName">User ID</h3>
+                        </div>
+                        <h5 class="info" id="userID">###</h5>
+                    </div>
+                </div>
+                <!-- Player Stats -->
+                <div id="playerStatsContainer" class="rightBorder">
+                <div class="playerStat">
+                    <div class="statCategory">
+                        <img src="misc/stats/winrate.svg" class="statLogo" viewbox="0 0 100 100">
+                        <h3 class="statName">Winrate</h3>
+                    </div>
+                    <h5 class="stat" id="winrate">### %</h5>
+                </div>
+
+                <div class="playerStat">
+                    <div class="statCategory">
+                        <img src="misc/stats/trophy.svg" class="statLogo" viewbox="0 0 100 100">
+                        <h3 class="statName">Wins</h3>
+                    </div>
+                    <h5 class="stat" id="wins">### games</h5>
+                </div>
+
+                <div class="playerStat">
+                    <div class="statCategory">
+                        <img src="misc/stats/skull.svg" class="statLogo" viewbox="0 0 100 100">
+                        <h3 class="statName">Looses</h3>
+                    </div>
+                    <h5 class="stat" id="looses">### games</h5>
+                </div>
+
+                <div class="playerStat">
+                    <div class="statCategory">
+                        <img src="misc/stats/draw.svg" class="statLogo" viewbox="0 0 100 100">
+                        <h3 class="statName">Draws</h3>
+                    </div>
+                    <h5 class="stat" id="draws">### games</h5>
+                </div>
+                </div>
+                <!-- Game Stats -->
+                <div id="gameStatsContainer">
+                <div class="gameStat">
+                    <div class="statCategory">
+                        <img src="misc/stats/hourglassMiddle.svg" class="statLogo" viewbox="0 0 100 100">
+                        <h3 class="statName">Average Duration</h3>
+                    </div>
+                    <h5 class="stat" id="average">### minutes</h5>
+                </div>
+                <div class="gameStat">
+                    <div class="statCategory">
+                        <img src="misc/stats/hourglassTop.svg" class="statLogo" viewbox="0 0 100 100">
+                        <h3 class="statName">Fastest game</h3>
+                    </div>
+                    <h5 class="stat" id="fastest">### minutes</h5>
+                </div>
+                <div class="gameStat">
+                    <div class="statCategory">
+                        <img src="misc/stats/hourglassBottom.svg" class="statLogo" viewbox="0 0 100 100">
+                        <h3 class="statName">Longest game</h3>
+                    </div>
+                    <h5 class="stat" id="longest">### minutes</h5>
+                </div>
+                <div class="gameStat">
+                    <div class="statCategory">
+                        <img src="misc/stats/fire.svg" class="statLogo" viewbox="0 0 100 100">
+                        <h3 class="statName">Best Winstreak</h3>
+                    </div>
+                    <h5 class="stat" id="winstreak">### games in a row</h5>
+                </div>
+            </div>
+            <!-- Player Info Right -->
+            <div id="playerInfoRight">
+                <div class="userInfo">
+                    <div class="infoCategory">
+                        <img src="misc/stats/calendarCheck.svg" class="infoLogo">
+                        <h3 id="infoName">First Connection</h3>
+                    </div>
+                    <h5 class="info" id="firstConnection">###</h5>
+                </div>
+                <div class="userInfo">
+                    <div class="infoCategory">
+                        <img src="misc/stats/calendarMinus.svg" class="infoLogo">
+                        <h3 id="infoName">Last Connection</h3>
+                    </div>
+                    <h5 class="info" id="lastConnection">###</h5>
+                </div>
+            </div>
+        </div>
+        </div>
+        <!-- Telemtry Section -->
+        <div class="section" id="telemetrySection">
+            <h1 class="sectionTitle">Live Telemetry</h1>
+            <div id="gameInfoContainer">
+                <div id="gameContainer">
+                    <div id="player1">Player #</div>
+                    <div id="topRow">
+                        <div class="gameSpot" id="6">#</div>
+                        <div class="gameSpot" id="5">#</div>
+                        <div class="gameSpot" id="4">#</div>
+                        <div class="gameSpot" id="3">#</div>
+                        <div class="gameSpot" id="2">#</div>
+                        <div class="gameSpot" id="1">#</div>
+                    </div>
+                    <div id="midRow">
+                        <div class="gameSpot" id="7">#</div>
+                        <div class="gameSpot" id="14">#</div>
+                    </div>
+                    <div id="botRow">
+                        <div class="gameSpot" id="8">#</div>
+                        <div class="gameSpot" id="9">#</div>
+                        <div class="gameSpot" id="10">#</div>
+                        <div class="gameSpot" id="11">#</div>
+                        <div class="gameSpot" id="12">#</div>
+                        <div class="gameSpot" id="13">#</div>
+                    </div>
+                    <div id="player2">Player #</div>
+                </div>
+                <div id="infoContainer">
+                    <div id="status">Not playing</div>
+                    <div id="turnInfo">
+                        <div id="move">Last move : #</div>
+                        <div id="duration">Turn duration: #</div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Footer -->
         <div id="footer">
             <!-- Media Section -->
             <div id="media">
                 <!-- Newsletter Section -->
                 <div id="newsletterContainer">
-                    <span class="footerText">Sign up for the project Newsletter</span>
+                    <span class="inputText">Sign up for the project Newsletter</span>
                     <div id="newsletterInputContainer">
                         <input type="email" placeholder="name@email.com" name="email" id="emailField">
-                        <button onclick="launcher   ()" id="submitButton">
+                        <button onclick="launcher()" id="newsletterSubmitButton">
                             <img src="misc/arrow-right.svg" viewbox="0 0 100 100" id="submitArrow">
                             <svg id="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
                                 <circle id="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
