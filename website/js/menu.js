@@ -19,7 +19,7 @@ function scrollFunction()
 function displaySection(ele)
 {
     ele = ele.getAttribute("section")
-    var sections = ['projectSection','technicalOverviewSection','documentationSection','teamSection','statsSection']
+    var sections = ['projectSection','technicalOverviewSection','documentationSection','teamSection','statsSection', 'telemetrySection']
     var cIndex = sections.indexOf(ele)
     var caller = document.getElementById(sections[cIndex])
     sections.splice(cIndex,1);

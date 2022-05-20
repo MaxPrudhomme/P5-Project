@@ -1,5 +1,4 @@
-import json
-from requests import ConnectionError, Timeout, TooManyRedirects
+from requests import ConnectionError, Timeout, TooManyRedirects, Session
 
 def sendTelemetry(game, player, move, duration):
     url = "project.maxprudhomme.com/telemetryPlatform"

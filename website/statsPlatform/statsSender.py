@@ -1,8 +1,8 @@
-from requests import ConnectionError, Timeout, TooManyRedirects
+from requests import ConnectionError, Timeout, TooManyRedirects, Session
 
-def statsSender(player1, player2, winner, looser, draw, duration):
+def statsSender(winner, looser, draw, duration):
     url = "project.maxprudhomme.com/telemetryPlatform"
-    parameters = [player1, player2, winner, looser, draw, duration]
+    parameters = [winner, looser, draw, duration]
     session = Session()
     try:
         response = session.get(url, params=parameters)
