@@ -167,3 +167,19 @@ input:focus
         box-shadow: inset 0px 0px 0px 30px #4bb71b;
     }
 }
+
+#en, #fr
+{
+    cursor: pointer;
+    border: 1px solid black;
+    border-radius: 3px;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+#languageContainer
+{
+    display: flex;
+    width: 50px;
+    height: 20px;
+}

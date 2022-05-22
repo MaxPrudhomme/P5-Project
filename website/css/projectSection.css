@@ -103,3 +103,14 @@
     height: 40px;
     margin-top: 5px;
 }
+
+.hidden
+{
+    display: none;
+}
+
+.ioImg
+{
+    height: 216px;
+    width: 384px;
+}

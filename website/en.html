@@ -1,0 +1,508 @@
+<!-- Navbar -->
+<div id="navbar">
+    <a href="index.html" id="indexLink"><img id="projectLogo" src="misc/ElmaoIndustriesLogo2.png" viewbox="0 0 100 100"></a>
+    <div id="mainMenu">
+        <div class="sectionMenu" section="projectSection" onclick="displaySection(this), stopUpdate()"><span>Project</span></div>
+        <div class="sectionMenu" section="technicalOverviewSection" onclick="displaySection(this), stopUpdate()">Technical Overview</div>
+        <div class="sectionMenu" section="documentationSection" onclick="displaySection(this), stopUpdate()">Documentation</div>
+        <div class="sectionMenu" section="teamSection" onclick="displaySection(this), stopUpdate()">Our Team</div>
+        <div class="sectionMenu" section="statsSection" onclick="displaySection(this), stopUpdate()">Stats</div>
+        <div class="sectionMenu" section="telemetrySection" onclick="displaySection(this), startUpdate()">Telemetry</div>
+    </div>
+</div>
+<!-- Content -->
+<div id="content">
+    <!-- Project Section -->
+    <div class="section" id="projectSection">
+        <h1 class="sectionTitle">Awale</h1>
+        <p class="projectDescription">
+            Awale is an old African strategy game. The usual game board is made of 14 spots carved in a wood piece representing all the players spots. They used to play this game using seeds or small rocks, spread across all the board with 4  in each spot except the two outer one. Each turn, the player choose a spot and scatter the seeds across the board going anticlockwise and adding one to each spot, except the ennemy score spot, until he ran out. The goal is to get as much seeds as possible in our score spot.
+        </p>
+        <!-- Feature 1 -->
+        <div class="feature fRight">
+            <div class="featureInfos">
+                <h2 class="featureName">Min - Max Algorithm</h2>
+                <p class="featureDescription">
+                    The Min - Max algorithm is coming in ! He will explore every possibilities on a certain depth to make sure he is winning as much points as possible and that the ennemy is making as few as possible.
+                </p>
+            </div>
+            <img src="misc/minmaxDiag.png" viewbox="0 0 100 100">
+        </div>
+        <!-- Feature 2 -->
+        <div class="feature fLeft">
+            <div class="featureInfos">
+                <h2 class="featureName">Alpha - Beta Algorithm</h2>
+                <p class="featureDescription">
+                    The Alpha - Beta algorithm will push the difficulty further ! By pruning the worst branches, this evolved version of the Min - Max will go further down the tree so explore even more solution and find the best one !
+                </p>
+            </div>
+            <img src="misc/alphabetaDiag.png" viewbox="0 0 100 100">
+        </div>
+        <!-- Feature 3 -->
+        <div class="feature fRight">
+            <div class="featureInfos">
+                <h2 class="featureName">Ergonomic UI</h2>
+                <p class="featureDescription">
+                    Play against our AIs using a simple, but efficient console interface, that wil help you focus on the most important aspect, winning ! No more disturbing elements to make you lose, time to shine !
+                </p>
+            </div>
+            <img src="misc/io.PNG" viewbox="0 0 100 100" class="ioImg">
+        </div>
+        <!-- Feature 4 -->
+        <div class="feature fLeft">
+            <div class="featureInfos">
+                <h2 class="featureName">Dev kit</h2>
+                <p class="featureDescription">
+                    Our AIs are based on small programs executing simple tasks as fast as possible to get as much done in the fewest time. Enjoy a simple but yet efficient and fast spoftware to create your own version or enhance the existing ones !
+                </p>
+            </div>
+            <img src="misc/devKit.PNG" viewbox="0 0 100 100" class="ioImg">
+        </div>
+
+        <div class="downloadSection">
+            <h2>Want to give it a try ?</h2>
+            <div class="downloadButton">
+                <a href="../awale.zip" download="projectSetup" class="dlLink">
+                    <img src="misc/download.svg" viewbox="0 0 100 100" id="downloadIcon">
+                </a>
+            </div>
+            <h4>Or clone the whole GitHub project here</h4>
+            <div class="downloadButton">
+                <a href="https://github.com/MaxPrudhomme/P5-Project" class="dlLink">
+                    <img src="misc/skills/github.png" viewbox="0 0 100 100" id="githubIcon">
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- Technical Overview Section -->
+    <div class="section" id="technicalOverviewSection">
+        <h1 class="sectionTitle">Technical Overview</h1>
+        <!-- Component 1 -->
+        <div class="component">
+            <h2 class="componentTitle">Min - Max explanation</h2>
+            <p class="componentDescription">
+                Those AIs are both working using the same concept. The Min - Max will go down all the possibilities with the current state of the game depending on the depth to get the best moves possible at each stage and decide which one is going to the level above, by substracting the two player scores. While going up the tree, the program will evaluate every single possibility and choose the one giving the more points to the player and as few as possible to the opponent.</p>
+        </div>
+        <!-- Component 2 -->
+        <div class="component">
+            <h2 class="componentTitle">Alpha - Beta explanation</h2>
+            <p class="componentDecription">
+                Our second AI is using the Alpha - Beta algorithm. This modified version of the Min - Max algorithm will stop exploring bad routes to save some computation time to get even deeper in the tree and explore the best solution even more to choose the best one. It's worth to note that it could stop searching in a route before it becomes profitable. We recommend using Alpha - Beta as he is the smarter one of the two due to it's ability to explore more path. This was admitted while using depth to force the AIs to play under 120 seconds. 
+            </p>
+        </div>
+        <!-- Component 3 -->
+        <div class="component hidden">
+            <h2 class="componentTitle">Component 3 title</h2>
+            <p>Quisque mattis tempor diam, vitae congue sem sagittis eu. Vivamus ut vehicula lectus. In vel
+                ultricies lectus, pretium scelerisque dui. Nulla tempus rhoncus aliquet. Nulla blandit lectus neque,
+                ac sodales lectus egestas et. Praesent felis lectus, molestie sed purus pellentesque, aliquet porta
+                urna. Praesent nec eleifend enim. Quisque luctus neque purus, quis condimentum augue mattis sit
+                amet. Aliquam in lectus a lacus consequat suscipit aliquam vitae ante. Vestibulum fermentum leo nec
+                nisi euismod, at sollicitudin justo suscipit. Duis auctor turpis volutpat leo ornare porttitor.
+                Morbi lectus sapien, blandit sit amet risus at, scelerisque volutpat erat. Fusce vestibulum orci vel
+                mauris rhoncus, at ultrices est tincidunt. Vestibulum sit amet nisl sagittis, tempor neque
+                consequat, dapibus ex.
+                Cras mauris lectus, condimentum at tellus vel, posuere ultricies tortor. Mauris iaculis auctor est,
+                et luctus erat ornare sed. Etiam maximus porta egestas. Fusce laoreet nulla eu nisi feugiat
+                pulvinar. Curabitur id metus ac odio dapibus blandit. Cras ultrices vel quam et finibus. Fusce et
+                consectetur lacus, a semper metus. Aenean finibus et velit at mollis. Aliquam in augue a leo tempus
+                facilisis. Donec et lectus vitae libero ultricies aliquam quis vel sem. Aliquam euismod elit ac
+                sapien lobortis efficitur. Pellentesque elementum orci eget egestas vehicula.
+                Curabitur dapibus est tortor, id vehicula urna luctus eu. Sed et dui et diam mollis consequat. Cras
+                porta purus eu sapien rhoncus scelerisque. Nunc mattis rutrum tristique. Proin id ligula luctus,
+                faucibus sem nec, sodales libero. Sed eu finibus lectus, eu fringilla odio. Aenean lacus velit,
+                venenatis in erat quis, viverra sodales dolor. Cras elementum molestie efficitur. Curabitur ut
+                pellentesque lectus. Vivamus ultricies lectus diam, sit amet ultrices nisi luctus nec.</p>
+        </div>
+        <!-- Component 4 -->
+        <div class="component hidden">
+            <h2 class="componentTitle">Component 4 title</h2>
+            <p>Nullam dictum lacus sem. Morbi ullamcorper odio turpis, vitae sollicitudin lacus scelerisque non.
+                Praesent quis sem mi. Morbi non molestie magna, a rhoncus odio. Duis at enim ullamcorper, auctor
+                quam a, tempor lectus. Aenean euismod nisl id diam semper, at condimentum elit lacinia. Ut
+                ullamcorper nunc ullamcorper, rutrum nibh vel, lacinia tortor. Nam id ex id dolor euismod sodales eu
+                vitae elit. Cras tempor eget nisi vitae ultrices. Phasellus magna metus, sagittis sit amet nulla
+                vel, ultrices sollicitudin est. Vestibulum interdum, urna ac facilisis dapibus, est velit rutrum
+                nisl, a gravida leo ligula at dolor. Duis et metus eu mauris lobortis vehicula ut eu nibh.
+                Pellentesque lobortis elit nec interdum consectetur.
+                Vivamus fringilla tempor dolor, at vulputate diam porta sit amet. Integer eu lacus ornare, auctor mi
+                vel, consequat neque. Aenean dolor ipsum, sollicitudin ac aliquet nec, sodales a mauris. Sed finibus
+                tempor purus vitae euismod. Morbi facilisis eleifend efficitur. Aenean eleifend lectus nec nisl
+                blandit, vitae mattis erat malesuada. Mauris sit amet euismod quam. Vestibulum imperdiet ligula sed
+                consectetur bibendum. Nunc porta orci arcu, eu maximus enim faucibus vel.
+                Morbi id enim blandit, eleifend nisi a, porta tortor. Nullam sit amet velit sit amet velit volutpat
+                accumsan aliquam ut orci. Cras rhoncus mollis laoreet. Sed commodo orci ac posuere tincidunt. Donec
+                pretium porta dolor, eu faucibus tellus elementum nec. Vivamus commodo semper leo at sollicitudin.
+                Duis condimentum mauris nec accumsan iaculis. Etiam id rhoncus dui, a ullamcorper elit. Donec
+                iaculis risus sodales, porttitor justo eget, bibendum nibh. Vivamus scelerisque, purus sagittis
+                pretium iaculis, lorem lectus malesuada ex, sed laoreet neque mi in diam. Vivamus porttitor laoreet
+                sem, sed eleifend libero pellentesque non. Praesent ornare diam eget ex iaculis fermentum. Ut mollis
+                ligula massa, at iaculis turpis sodales vel.</p>
+        </div>
+    </div>
+    <!-- Documentation Section -->
+    <div class="section" id="documentationSection">
+        <h1 class="sectionTitle">Documentation</h1>
+        <!-- Module 1 -->
+        <div class="module">
+            <h1 class="moduleTitle">SwapPlayer(player)</h1>
+            <p class="moduleDescription">
+                'player' : int()<br><br>
+                Return the other player that the one in the arguments. Player must use the '1' / '2' or '0' / '7' format.
+            </p>
+        </div>
+
+        <!-- Module 2 -->
+        <div class="module">
+            <h1 class="moduleTitle">Converter(player)</h1>
+            <p class="moduleDescription">
+                'player' : int()<br><br>
+                Convert players format from '1' / '2' to '0' / '7'. This format is optimized to make computation and simulation faster as it acts itself as a modifier. 
+            </p>
+        </div>
+
+        <!-- Module 3 -->
+        <div class="module">
+            <h1 class="moduleTitle">NextSpot(spot, player)</h1>
+            <p class="moduleDescription">
+                'spot' : int()<br>
+                'player' : int()<br><br>
+                Return the next spot depending on the current spot and player. Player must use the '0' / '7' format.
+            </p>
+        </div>
+
+        <!-- Module 4 -->
+        <div class="module">
+            <h1 class="moduleTitle">Sim(game, player, spot)</h1>
+            <p class="moduleDescription">
+                'game' : list()<br>
+                'player' : int()<br>
+                'spot' : int()<br><br>
+                Simulate an action by using the current state of the game, the current player and the requested action. Player must use the '0' / '7' format.
+            </p>
+        </div>
+
+        <!-- Module 4 -->
+        <div class="module">
+            <h1 class="moduleTitle">State(game)</h1>
+            <p class="moduleDescription">
+                'game' : list()<br><br>
+                Return 'True' if a player can no longer play or 'False' if both can still play.
+            </p>
+        </div>
+        
+        <!-- Module 4 -->
+        <div class="module">
+            <h1 class="moduleTitle">GetMoves(game, player)</h1>
+            <p class="moduleDescription">
+                'game' : list()<br>
+                'player' : int()<br><br>
+                Return all potential actions for a player depending on the current state of the game. Player must use the '0' / '7' format.
+            </p>
+        </div>
+
+        <!-- Module 4 -->
+        <div class="module">
+            <h1 class="moduleTitle">Eval(game, player, maximizing)</h1>
+            <p class="moduleDescription">
+                'game' : list()<br>
+                'player' : int()<br>
+                'maximizing' : bool()<br><br>
+                Return the difference between both scores depending on the current state of the game. This is part of the Min - Max and the enhanced versions of this algorithm. 'Maximzing' help to identify between the player and the foe : 'True' means the 'player' is the player and 'False' means the 'player' is the foe. Player must use the '0' / '7' format. 
+            </p>
+        </div>
+
+        <!-- Module 4 -->
+        <div class="module">
+            <h1 class="moduleTitle">Gather(game)</h1>
+            <p class="moduleDescription">
+                'game' : list()<br><br>
+                Return both scores in order.
+            </p>
+        </div>
+
+        <!-- Module 4 -->
+        <div class="module">
+            <h1 class="moduleTitle">SendTelemetry(game, player, move, duration)</h1>
+            <p class="moduleDescription">
+                'game' : list()<br>
+                'player' : int()<br>
+                'move' : int()<br>
+                'duration' : float()<br><br>
+                Transmit to web server the current state of the game, the player, the choosen move and the computation time, in order to remotely watch the current game in the Telemetry Tab. This shouldn't be use.
+            </p>
+        </div>
+
+
+
+
+
+    </div>
+    <!-- Team Section -->
+    <div class="section" id="teamSection">
+        <h1 class="sectionTitle">Our Team</h1>
+
+        <div class="team">
+            <!-- First Member -->
+            <div class="person">
+                <img class="personPic" src="misc/IMG_9348.jpg" viewbox="0 0 100 100">
+                <div class="personInfos">
+                    <h1 class="personName">Max PRUDHOMME</h1>
+                    <h3 class="personAge">Age : 18</h3>
+                    <h3 class="personGroup">Group : L1 MI - 3A</h3>
+                    <!-- Programming Skills -->
+                    <h3 class="personSkillsT">Programming skills :</h3>
+                    <div class="skillsContainer">
+                        <img src="misc/skills/html.png" class="skill">
+                        <img src="misc/skills/css.png" class="skill">
+                        <img src="misc/skills/javascript.png" class="skill">
+                        <img src="misc/skills/python.png" class="skill">
+                        <img src="misc/skills/c.png" class="skill">
+                    </div>
+                    <!-- Other Skills -->
+                    <h3 class="personSkillsT">Other skills :</h3>
+                    <div class="skillsContainer">
+                        <img src="misc/skills/electron.png" class="skill">
+                        <img src="misc/skills/github.png" class="skill">
+                        <img src="misc/skills/photoshop.png" class="skill">
+                        <img src="misc/skills/premiere.png" class="skill">
+                        <img src="misc/skills/linux.png" class="skill">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Second Member -->
+            <div class="person">
+                <img class="personPic" src="misc/IMG_9347.jpg" viewbox="0 0 100 100">
+                <div class="personInfos">
+                    <h1 class="personName">Paul - Alexandre Pilon</h1>
+                    <h3 class="personAge">Age : 18</h3>
+                    <h3 class="personGroup">Group : L1 MI - 3A</h3>
+                    <!-- Programming Skills -->
+                    <h3 class="personSkillsT">Programming skills :</h3>
+                    <div class="skillsContainer">
+                        <img src="misc/skills/html.png" class="skill">
+                        <img src="misc/skills/css.png" class="skill">
+                        <img src="misc/skills/python.png" class="skill">
+                        <img src="misc/skills/c.png" class="skill">
+                    </div>
+                    <!-- Other Skills -->
+                    <h3 class="personSkillsT">Other skills :</h3>
+                    <div class="skillsContainer">
+                        <img src="misc/skills/github.png" class="skill">
+                        <img src="misc/skills/photoshop.png" class="skill">
+                        <img src="misc/skills/premiere.png" class="skill">
+                        <img src="misc/skills/linux.png" class="skill">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Stats Section -->
+    <div class="section" id="statsSection">
+        <h1 class="sectionTitle">Player Stats</h1>
+        <!-- Player Input Field -->
+        <div id="playerSearchContainer">
+            <div id="playerInputContainer">
+                <input type="text" name="player" id="playerField" placeholder="Player Name / Player ID">
+                <button id="playerSubmit" onclick="playerSearcher()">
+                    <img src="misc/arrow-right.svg" viewbox="0 0 100 100" id="submitArrow">
+                </button>
+            </div>
+            <div id="playerOutputContainer"></div>
+        </div>
+        <!-- Stats Container -->
+        <div id="statsContainer">
+            <!-- Player Info Left -->
+            <div id="playerInfoLeft">
+                <div class="userInfo">
+                    <div class="infoCategory">
+                        <img src="misc/stats/person.svg" class="infoLogo">
+                        <h3 id="infoName">Username</h3>
+                    </div>
+                    <h5 class="info" id="username">###</h5>
+                </div>
+                <div class="userInfo">
+                    <div class="infoCategory">
+                        <img src="misc/stats/fingerprint.svg" class="infoLogo">
+                        <h3 id="infoName">User ID</h3>
+                    </div>
+                    <h5 class="info" id="userID">###</h5>
+                </div>
+            </div>
+            <!-- Player Stats -->
+            <div id="playerStatsContainer" class="rightBorder">
+            <div class="playerStat">
+                <div class="statCategory">
+                    <img src="misc/stats/winrate.svg" class="statLogo" viewbox="0 0 100 100">
+                    <h3 class="statName">Winrate</h3>
+                </div>
+                <h5 class="stat" id="winrate">### %</h5>
+            </div>
+
+            <div class="playerStat">
+                <div class="statCategory">
+                    <img src="misc/stats/trophy.svg" class="statLogo" viewbox="0 0 100 100">
+                    <h3 class="statName">Wins</h3>
+                </div>
+                <h5 class="stat" id="wins">### games</h5>
+            </div>
+
+            <div class="playerStat">
+                <div class="statCategory">
+                    <img src="misc/stats/skull.svg" class="statLogo" viewbox="0 0 100 100">
+                    <h3 class="statName">Looses</h3>
+                </div>
+                <h5 class="stat" id="looses">### games</h5>
+            </div>
+
+            <div class="playerStat">
+                <div class="statCategory">
+                    <img src="misc/stats/draw.svg" class="statLogo" viewbox="0 0 100 100">
+                    <h3 class="statName">Draws</h3>
+                </div>
+                <h5 class="stat" id="draws">### games</h5>
+            </div>
+            </div>
+            <!-- Game Stats -->
+            <div id="gameStatsContainer">
+            <div class="gameStat">
+                <div class="statCategory">
+                    <img src="misc/stats/hourglassMiddle.svg" class="statLogo" viewbox="0 0 100 100">
+                    <h3 class="statName">Average Duration</h3>
+                </div>
+                <h5 class="stat" id="average">### minutes</h5>
+            </div>
+            <div class="gameStat">
+                <div class="statCategory">
+                    <img src="misc/stats/hourglassTop.svg" class="statLogo" viewbox="0 0 100 100">
+                    <h3 class="statName">Fastest game</h3>
+                </div>
+                <h5 class="stat" id="fastest">### minutes</h5>
+            </div>
+            <div class="gameStat">
+                <div class="statCategory">
+                    <img src="misc/stats/hourglassBottom.svg" class="statLogo" viewbox="0 0 100 100">
+                    <h3 class="statName">Longest game</h3>
+                </div>
+                <h5 class="stat" id="longest">### minutes</h5>
+            </div>
+            <div class="gameStat">
+                <div class="statCategory">
+                    <img src="misc/stats/fire.svg" class="statLogo" viewbox="0 0 100 100">
+                    <h3 class="statName">Best Winstreak</h3>
+                </div>
+                <h5 class="stat" id="winstreak">### games in a row</h5>
+            </div>
+        </div>
+        <!-- Player Info Right -->
+        <div id="playerInfoRight">
+            <div class="userInfo">
+                <div class="infoCategory">
+                    <img src="misc/stats/calendarCheck.svg" class="infoLogo">
+                    <h3 id="infoName">First Connection</h3>
+                </div>
+                <h5 class="info" id="firstConnection">###</h5>
+            </div>
+            <div class="userInfo">
+                <div class="infoCategory">
+                    <img src="misc/stats/calendarMinus.svg" class="infoLogo">
+                    <h3 id="infoName">Last Connection</h3>
+                </div>
+                <h5 class="info" id="lastConnection">###</h5>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- Telemtry Section -->
+    <div class="section" id="telemetrySection">
+        <h1 class="sectionTitle">Live Telemetry</h1>
+        <div id="gameInfoContainer">
+            <div id="gameContainer">
+                <div id="player1">Player #</div>
+                <div id="topRow">
+                    <div class="gameSpot" id="6">#</div>
+                    <div class="gameSpot" id="5">#</div>
+                    <div class="gameSpot" id="4">#</div>
+                    <div class="gameSpot" id="3">#</div>
+                    <div class="gameSpot" id="2">#</div>
+                    <div class="gameSpot" id="1">#</div>
+                </div>
+                <div id="midRow">
+                    <div class="gameSpot" id="7">#</div>
+                    <div class="gameSpot" id="14">#</div>
+                </div>
+                <div id="botRow">
+                    <div class="gameSpot" id="8">#</div>
+                    <div class="gameSpot" id="9">#</div>
+                    <div class="gameSpot" id="10">#</div>
+                    <div class="gameSpot" id="11">#</div>
+                    <div class="gameSpot" id="12">#</div>
+                    <div class="gameSpot" id="13">#</div>
+                </div>
+                <div id="player2">Player #</div>
+            </div>
+            <div id="infoContainer">
+                <div id="status">Not playing</div>
+                <div id="turnInfo">
+                    <div id="move">Last move : #</div>
+                    <div id="duration">Turn duration: #</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <div id="footer">
+        <!-- Media Section -->
+        <div id="media">
+            <!-- Newsletter Section -->
+            <div id="newsletterContainer">
+                <span class="inputText">Sign up for the project Newsletter</span>
+                <div id="newsletterInputContainer">
+                    <input type="email" placeholder="name@email.com" name="email" id="emailField">
+                    <button onclick="launcher()" id="newsletterSubmitButton">
+                        <img src="misc/arrow-right.svg" viewbox="0 0 100 100" id="submitArrow">
+                        <svg id="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                            <circle id="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+                            <path id="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <!-- Language section -->
+            <div id="languageContainer">
+                <div id="enContainer">
+                    <img id="en" src="misc/enFlag.png" onclick="changeLanguage(this.id)">
+                </div>
+                <div id="frContainer">
+                    <img id="fr" src="misc/frFlag.jpg" onclick="changeLanguage(this.id)">
+                </div>
+            </div>
+            <!-- Social Media Section -->
+            <div id="socialMediaContainer">
+                <span class="footerText">Join our social media to follow the project developpment !</span>
+                <div id="projectMediaContainer">
+                    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+                        <img src="misc/instagram.svg" class="mediaIcon" viewbox="0 0 100 100">
+                    </a>
+                    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+                        <img src="misc/twitter.svg" class="mediaIcon" viewbox="0 0 100 100">
+                    </a>
+                    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+                        <img src="misc/youtube.svg" class="mediaIcon" viewbox="0 0 100 100">
+                    </a>
+                    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+                        <img src="misc/discord.svg" class="mediaIcon" viewbox="0 0 100 100">
+                    </a>
+
+                </div>
+            </div>
+        </div>
+        <!-- Copyright Section -->
+        <div id="copyright">
+            <p>Copyright &copy 2022 Elmao Industries, Inc All rights reserved. <span><a href="terms-of-use.html"
+                        id="touLink">Terms of Use</a></span> | <span><a href="privacy-policy.html"
+                        id="ppLink">Privacy Policy</a></span></p>
+            <p>1 420 Elmao Industries (1 420 666 6942) | TTY (1 421 667 6943)</p>
+        </div>
+    </div>

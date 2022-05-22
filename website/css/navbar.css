@@ -20,6 +20,9 @@
 #projectLogo
 {
     transition: all 0.5s ease;
+    height: 164px;
+    width: 218px;
+    margin-left: 125px;
 }
 
 #indexLink

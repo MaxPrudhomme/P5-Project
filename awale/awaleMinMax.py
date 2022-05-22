@@ -75,7 +75,7 @@ def gather(game):
     game[14] += sum(game[8:14])
     return game[7], game[14] #DONE
 
-def proc(depth, player, game):
+
 
     return multiProcessing(game, player, depth - 1, True) #DONE
 
