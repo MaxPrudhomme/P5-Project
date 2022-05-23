@@ -6,7 +6,8 @@
             <div class="sectionMenu" section="projectSection" onclick="displaySection(this), stopUpdate()"><span>Projet</span></div>
             <div class="sectionMenu" section="technicalOverviewSection" onclick="displaySection(this), stopUpdate()">Détails Technique</div>
             <div class="sectionMenu" section="documentationSection" onclick="displaySection(this), stopUpdate()">Documentation</div>
-            <div class="sectionMenu" section="teamSection" onclick="displaySection(this), stopUpdate()">Notre Équipe</div>
+            <div class="sectionMenu" section="teamSection" onclick="displaySection(this), stopUpdate()">Notre Équipe</div>  
+            <div class="sectionMenu" section="roadmpaSection" onclick="displaySection(this), startUpdate()">Roadmap</div>
             <div class="sectionMenu" section="statsSection" onclick="displaySection(this), stopUpdate()">Stats</div>
             <div class="sectionMenu" section="telemetrySection" onclick="displaySection(this), startUpdate()">Télémètrie</div>
         </div>
@@ -298,6 +299,43 @@
                 </div>
             </div>
         </div>
+        <!-- Roadmap Section -->
+        <div class="section" id="roadmapSection">
+            <h1 class="sectionTitle">Roadmap</h1>
+            <div id="devTitleContainer">
+                <h2 class="devTitle webT">Web</h2>
+                <h2 class="devTitle delT">Delivery</h2>
+                <h2 class="devTitle iaT">IA</h2>
+            </div>
+
+
+            <div id="roadmapContainer">
+                <div class="roadmapItem web">
+                    <h2>Construction de la structure du site web</h2>
+                    <h4>18 Avril 2022 - 26 Avril 2022</h4>
+                </div>
+                <div class="roadmapItem ia ">
+                    <h2>Analyse préliminaire du sujet</h2>
+                    <h4>26 Avril 2022 - 30 Avril 2022</h4>
+                </div>
+                <div class="roadmapItem ia">
+                    <h2>Développement de l'IA</h2>
+                    <h4>1 Mai 2022 - 14 Mai 2022</h4>
+                </div>
+                <div class="roadmapItem web">
+                    <h2>Implémentation du module statistiques</h2>
+                    <h4>14 Mai 2022 - 17 Mai 2022</h4>
+                </div>
+                <div class="roadmapItem web">
+                    <h2>Implémentation du module télémétries</h2>
+                    <h4>18 Mai 2022 - 20 Mai 2022</h4>
+                </div>
+                <div class="roadmapItem delivery">
+                    <h2>Livraison du projet</h2>
+                    <h4>21 Mai 2022</h4>
+                </div>
+            </div>
+        </div>
         <!-- Stats Section -->
         <div class="section" id="statsSection">
             <h1 class="sectionTitle">Statistiques des joueurs</h1>
@@ -478,7 +516,6 @@
                         <img id="fr" src="misc/frFlag.jpg" onclick="changeLanguage(this.id)">
                     </div>
                 </div>
-
                 <!-- Social Media Section -->
                 <div id="socialMediaContainer">
                     <span class="footerText">Rejoignez nos réseaux sociaux pour suivre le développement !</span>
